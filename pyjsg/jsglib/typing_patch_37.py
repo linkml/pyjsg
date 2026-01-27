@@ -1,7 +1,7 @@
 import sys
 from collections.abc import Iterable
 
-# Typing_patch module for Python 3.7
+# Typing_patch module for Python 3.7+
 
 if sys.version_info >= (3, 7):
     from typing import Dict, Any, Union, ForwardRef, Callable, Type, _eval_type
@@ -14,6 +14,11 @@ def proc_forward(etype, namespace: Dict[str, Any]):
 
 def is_union(etype) -> bool:
     """ Determine whether etype is a Union """
+    if sys.version_info >= (3, 14):
+        from types import UnionType
+        from typing import get_origin
+        return get_origin(etype) in {Union, UnionType}
+
     return getattr(etype, '__origin__', None) is not None and \
            getattr(etype.__origin__, '_name', None) and\
            etype.__origin__._name == 'Union'
