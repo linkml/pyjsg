@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[project]
+name = "PyJSG"
+description = "Python JSON Schema Grammar interpreter"
+authors = [
+    { name = "Harold Solbrig", email = "solbrig@jhu.edu" },
+    { name = "Wouter-Michiel Vierdag", email = "michiel.vierdag@scverse.org" }
+]
+license = { text = "CC0 1.0 Universal" }
+repository = "https://github.com/hsolbrig/pyjsg"
+readme = "README.md"
+keywords = [
+    "JSG",
+    "Javascript",
+    "Schema",
+    "Python",
+    "Code Generator",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Code Generators",
+    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.10"
+dynamic = ["version"]
+dependencies = [
+  "antlr4-python3-runtime~=4.9.3",
+  "jsonasobj>=1.2.1",
+]
+
+[project.scripts]
+generate_parser = "pyjsg.parser_impl.generate_python:generate"
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "pep440"
+fallback-version = "0.0.0"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pyjsg"]
+
+[dependency-groups]
+dev = [
+  "requests",
+  "yadict_compare",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py310", "py311", "py312", "py313",  "py314"]
