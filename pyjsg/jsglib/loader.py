@@ -1,20 +1,15 @@
 import json
-import sys
 import types
-from typing import Union, Dict
 
 from pyjsg.jsglib.jsg_validateable import JSGValidateable
 from .logger import *
 
-if sys.version_info < (3, 7):
-    from .typing_patch_36 import is_union
-else:
-    from .typing_patch_37 import is_union
+from .typing_patch_37 import is_union
 
 UNKNOWN_TYPE_EXCEPTION = "Type '{}' is undefined"
 
 
-def loads_loader(load_module: types.ModuleType, pairs: Dict[str, str]) -> Optional[JSGValidateable]:
+def loads_loader(load_module: types.ModuleType, pairs: dict[str, str]) -> JSGValidateable | None:
     """json loader objecthook
 
     :param load_module: Module that contains the various types
@@ -65,7 +60,7 @@ def loads(s: str, load_module: types.ModuleType, **kwargs):
     return json.loads(s, object_hook=lambda pairs: loads_loader(load_module, pairs), **kwargs)
 
 
-def load(fp: Union[TextIO, str], load_module: types.ModuleType, **kwargs):
+def load(fp: TextIO | str, load_module: types.ModuleType, **kwargs):
     """ Convert a file name or file-like object containing stringified JSON into a JSGObject
 
     :param fp: file-like object to deserialize
@@ -90,7 +85,7 @@ def isinstance_(x, A_tuple):
         return isinstance(x, A_tuple)
 
 
-def is_valid(obj: JSGValidateable, log: Optional[Union[TextIO, Logger]] = None) -> bool:
+def is_valid(obj: JSGValidateable, log: TextIO | Logger | None = None) -> bool:
     """ Determine whether obj is valid
 
     :param obj: Object to validate

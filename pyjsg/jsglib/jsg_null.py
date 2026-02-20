@@ -1,4 +1,4 @@
-from typing import Optional, Union, TextIO
+from typing import TextIO
 
 from pyjsg.jsglib.jsg_validateable import JSGValidateable
 from pyjsg.jsglib.logger import Logger
@@ -23,5 +23,5 @@ class JSGNull(JSGValidateable, metaclass=JSGNullMeta):
             return cls
         raise ValueError(f"Invalid Null Value: {val}")
 
-    def _is_valid(self, log: Optional[Union[TextIO, Logger]] = None) -> bool:
+    def _is_valid(self, log: TextIO | Logger | None = None) -> bool:
         return True

@@ -1,7 +1,7 @@
 # Generated from /Users/mrf7578/Development/git/hsolbrig/pyjsg/grammar/jsgParser.g4 by ANTLR 4.7
 from antlr4 import *
 from io import StringIO
-from typing.io import TextIO
+from typing import TextIO
 import sys
 
 

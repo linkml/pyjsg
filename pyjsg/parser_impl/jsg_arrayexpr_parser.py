@@ -1,5 +1,3 @@
-from typing import Optional, List, Tuple
-
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor
 from pyjsg.parser_impl.jsg_doc_context import JSGDocContext, PythonGeneratorElement
@@ -7,12 +5,12 @@ from pyjsg.parser_impl.parser_utils import flatten_unique
 
 
 class JSGArrayExpr(jsgParserVisitor, PythonGeneratorElement):
-    def __init__(self, context: JSGDocContext, ctx: Optional[jsgParser.ArrayExprContext] = None):
+    def __init__(self, context: JSGDocContext, ctx: jsgParser.ArrayExprContext | None = None):
         from pyjsg.parser_impl.jsg_valuetype_parser import JSGValueType
         from pyjsg.parser_impl.jsg_ebnf_parser import JSGEbnf
 
         self._context = context
-        self._types: List[JSGValueType] = None
+        self._types: list[JSGValueType] | None = None
         self._ebnf: JSGEbnf = JSGEbnf(context)
         self._ebnf.min = 0
         self._ebnf.max = None
@@ -49,10 +47,10 @@ class JSGArrayExpr(jsgParserVisitor, PythonGeneratorElement):
     def mt_value(self) -> str:
         return "None"
 
-    def members_entries(self, all_are_optional: Optional[bool] = False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool | None = False) -> list[tuple[str, str]]:
         return []
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         return flatten_unique([t.dependency_list() for t in self._types])
 
     # ***************

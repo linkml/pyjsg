@@ -1,5 +1,5 @@
 from io import StringIO
-from typing import Optional, TextIO, cast, Any
+from typing import TextIO, cast, Any
 
 
 class Logger:
@@ -9,7 +9,7 @@ class Logger:
     controlled by the presence of logfile.  If it is present, errors are logged and all errors are recorded.  If
     absent, the fact that the error exists is noted.
     """
-    def __init__(self, logfile: Optional[TextIO] = None):
+    def __init__(self, logfile: TextIO | None = None):
         """
         Construct a logging instance
         :param logfile: File to log to.  If absent, no messages are recorded
@@ -39,7 +39,7 @@ class Logger:
         """
         return self._logfile is not None
 
-    def getvalue(self) -> Optional[str]:
+    def getvalue(self) -> str | None:
         """ Return the current contents of the log file, if any """
         return self._logfile.read() if self._logfile else None
 

@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any, Type, Union, TextIO
+from typing import Any, Type, TextIO
 
 from pyjsg.jsglib.jsg_object import JSGObject
 from pyjsg.jsglib.conformance import conforms
@@ -18,7 +18,7 @@ class JSGObjectMap(JSGObject):
     _value_type: type(JSGValidateable) = AnyType
 
     _min: int = 0
-    _max: Optional[int] = None
+    _max: int | None = None
 
     _strict = False
 
@@ -57,7 +57,7 @@ class JSGObjectMap(JSGObject):
                     return False
         return super()._is_valid_element(log, name, entry)
 
-    def _is_valid(self, log_file: Optional[Union[Logger, TextIO]] = None) -> bool:
+    def _is_valid(self, log_file: Logger | TextIO | None = None) -> bool:
         log = Logger() if log_file is None else log_file if isinstance(log_file, Logger) else Logger(log_file)
         nerrors = log.nerrors
         nitems = len(self._strip_nones(self.__dict__))

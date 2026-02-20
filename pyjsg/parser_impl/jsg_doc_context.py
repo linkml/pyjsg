@@ -1,7 +1,5 @@
-import sys
 from abc import ABCMeta, abstractmethod
 from collections import OrderedDict
-from typing import List, Set, Optional, Dict, Union, Tuple
 
 from .parser_utils import as_set
 from pyjsg.parser_impl.anonymousidentifierfactory import AnonymousIdentifierFactory
@@ -28,12 +26,12 @@ class PythonGeneratorElement(metaclass=ABCMeta):
         """ Return the empty (missing) value token fo rthis element """
 
     @abstractmethod
-    def members_entries(self, all_are_optional: Optional[bool] = False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool | None = False) -> list[tuple[str, str]]:
         """ Return the name / type initializers for the _members section of the generated python """
         ...
 
     @abstractmethod
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         """ Return an ordered list of element names that this is dependent on """
         ...
 
@@ -57,16 +55,16 @@ class UndefinedElement(PythonGeneratorElement):
     def mt_value(self) -> str:
         return "None"
 
-    def members_entries(self, all_are_optional: Optional[bool] = False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool | None = False) -> list[tuple[str, str]]:
         return []
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         return []
 
-    def signatures(self, all_are_optional: bool=False) -> List[str]:
+    def signatures(self, all_are_optional: bool = False) -> list[str]:
         return []
 
-    def initializers(self, prefix: Optional[str] = None) -> List[str]:
+    def initializers(self, prefix: str | None = None) -> list[str]:
         return []
 
 
@@ -89,12 +87,12 @@ class JSGDocContext:
         from pyjsg.parser_impl.jsg_arrayexpr_parser import JSGArrayExpr
         from pyjsg.parser_impl.jsg_builtinvaluetype_parser import JSGBuiltinValueType
 
-        self.directives: List[str] = []
-        self.grammarelts: Dict[str, Union[JSGLexerRuleBlock, JSGObjectExpr,  JSGArrayExpr,
-                                          JSGForwardRef, JSGBuiltinValueType]] = OrderedDict()
-        self.dependency_map: Dict[str, List[str]] = {}
-        self.forward_refs: Dict[str, str] = {}
-        self.depths: Dict[str, int] = {}
+        self.directives: list[str] = []
+        self.grammarelts: dict[str, JSGLexerRuleBlock | JSGObjectExpr | JSGArrayExpr | JSGForwardRef |
+                                    JSGBuiltinValueType] = OrderedDict()
+        self.dependency_map: dict[str, list[str]] = {}
+        self.forward_refs: dict[str, str] = {}
+        self.depths: dict[str, int] = {}
         self.has_typeid: bool = False
 
         self._id_factory = AnonymousIdentifierFactory()
@@ -136,7 +134,7 @@ class JSGDocContext:
             return typ.reference_type()
         return tkn
 
-    def dependency_list(self, tkn: str) -> List[str]:
+    def dependency_list(self, tkn: str) -> list[str]:
         """Return a list all of the grammarelts that depend on tkn
 
         :param tkn: 
@@ -147,7 +145,7 @@ class JSGDocContext:
             self.dependency_map[tkn] = self.reference(tkn).dependency_list()
         return self.dependency_map[tkn]
 
-    def dependencies(self, tkn: str) -> Set[str]:
+    def dependencies(self, tkn: str) -> set[str]:
         """Return all the items that tkn depends on as a set
 
         :param tkn:
@@ -155,12 +153,12 @@ class JSGDocContext:
         """
         return set(self.dependency_list(tkn))
 
-    def undefined_entries(self) -> Set[str]:
+    def undefined_entries(self) -> set[str]:
         """ Return the set of tokens that are referenced but not defined. """
         return as_set([[d for d in self.dependencies(k) if d not in self.grammarelts]
                        for k in self.grammarelts.keys()])
 
-    def dependency_closure(self, tkn: str, seen: Optional[Set[str]]=None) -> Set[str]:
+    def dependency_closure(self, tkn: str, seen: set[str] | None = None) -> set[str]:
         """
         Determine the transitive closure of tkn's dependencies
         :param tkn: root token
@@ -175,7 +173,7 @@ class JSGDocContext:
                 self.dependency_closure(k, seen)
         return seen
 
-    def circular_references(self) -> Set[str]:
+    def circular_references(self) -> set[str]:
         """
         Return the set of recursive (circular) references
         :return:

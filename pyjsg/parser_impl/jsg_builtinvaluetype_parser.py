@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple, Dict, List
 
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor
@@ -14,7 +13,7 @@ class JSGBuiltinValueType(jsgParserVisitor, PythonGeneratorElement):
         py_type: type
         mt_value: str
 
-    parserTypeToImplClass: Dict[str, TypeInfo] = \
+    parserTypeToImplClass: dict[str, TypeInfo] = \
         {"@string": TypeInfo("jsg.String", "jsg.String", str, "None"),
          "@object": TypeInfo("jsg.ObjectFactory('{name}', _CONTEXT, jsg.Object)", "jsg.JSGObject", object, "None"),
          "@int": TypeInfo("jsg.Integer", "jsg.Integer", int, "None"),
@@ -24,9 +23,9 @@ class JSGBuiltinValueType(jsgParserVisitor, PythonGeneratorElement):
          "@bool": TypeInfo("jsg.Boolean", "jsg.Boolean", bool, "None"),
          ".": TypeInfo("jsg.AnyTypeFactory('{name}', _CONTEXT)", "jsg.AnyType", object, "jsg.Empty")}
 
-    def __init__(self, context: JSGDocContext, ctx: Optional[jsgParser.BuiltinValueTypeContext] = None):
+    def __init__(self, context: JSGDocContext, ctx: jsgParser.BuiltinValueTypeContext | None = None):
         self._context = context
-        self._value_type_text: Optional[str] = None
+        self._value_type_text: str | None = None
         self._typeinfo: JSGBuiltinValueType.TypeInfo = None
         self.text = ""
         if ctx:
@@ -48,10 +47,10 @@ class JSGBuiltinValueType(jsgParserVisitor, PythonGeneratorElement):
     def mt_value(self) -> str:
         return self._typeinfo.mt_value
 
-    def members_entries(self, all_are_optional: Optional[bool] = False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool | None = False) -> list[tuple[str, str]]:
         return []
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         return []
 
     # ***************

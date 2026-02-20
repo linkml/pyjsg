@@ -18,7 +18,7 @@ class details(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: typing.dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -37,7 +37,7 @@ class person(jsg.JSGObject):
                  gender: str = None,
                  active: bool = None,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: typing.dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.name = name
         self.gender = gender
@@ -56,7 +56,7 @@ class company(jsg.JSGObject):
     def __init__(self,
                  name: str = None,
                  employees: typing.List[person] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: typing.dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.name = name
         setattr(self, 'year founded', _kwargs.get('year founded', None))

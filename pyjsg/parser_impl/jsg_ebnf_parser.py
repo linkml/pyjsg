@@ -8,7 +8,7 @@ from pyjsg.parser_impl.jsg_valuetype_parser import JSGValueType
 
 class JSGEbnf(jsgParserVisitor):
     """ Cardinality processing """
-    def __init__(self, context: JSGDocContext, ctx: Optional[jsgParser.EbnfSuffixContext] = None):
+    def __init__(self, context: JSGDocContext, ctx: jsgParser.EbnfSuffixContext | None = None):
         self._context = context
         self._ebnftext = ""                 # type: str
         self.min = 1                        # type: int

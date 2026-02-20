@@ -1,6 +1,3 @@
-import sys
-from typing import Optional, List, Tuple
-
 from pyjsg.jsglib.jsg_context import JSGContext
 from pyjsg.jsglib.jsg_validateable import JSGValidateable
 from pyjsg.jsglib.loader import Logger
@@ -8,8 +5,8 @@ from pyjsg.jsglib.conformance import conforms
 
 
 class JSGArray(list, JSGValidateable):
-    def __init__(self, variable_name: str, context: JSGContext, typ, min_: int, max_: Optional[int],
-                 value: Optional[list]) -> None:
+    def __init__(self, variable_name: str, context: JSGContext, typ, min_: int, max_: int | None,
+                 value: list | None) -> None:
         """ Construct an array holder
 
         :param variable_name: Name assigned to the variable.  Used for error reporting
@@ -23,18 +20,18 @@ class JSGArray(list, JSGValidateable):
         self._context = context
         self._type = typ
         self._min: int = min_
-        self._max: Optional[int] = max_
+        self._max: int | None = max_
         if value is not None:
             isvalid, errors = self._validate(value)
             if not isvalid:
                 raise ValueError("\n".join(errors))
         super().__init__([] if value is None else value)    # Construct the actual list
 
-    def _is_valid(self, log: Optional[Logger] = None) -> bool:
+    def _is_valid(self, log: Logger | None = None) -> bool:
         """ Determine whether the current contents are valid """
         return self._validate(self, log)[0]
 
-    def _validate(self, val: list, log: Optional[Logger] = None) -> Tuple[bool, List[str]]:
+    def _validate(self, val: list, log: Logger | None = None) -> tuple[bool, list[str]]:
         """ Determine whether val is a valid instance of this array
 
         :returns: Success indicator and error list """
@@ -66,7 +63,7 @@ class ArrayWrapperMeta(type):
     context: JSGContext
     typ: type
     min: int
-    max: Optional[int]
+    max: int | None
 
     def __instancecheck__(self, instance: list) -> bool:
         if not isinstance(instance, list):
@@ -82,13 +79,13 @@ class ArrayWrapper(metaclass=ArrayWrapperMeta):
     context: JSGContext
     typ: type
     min: int
-    max: Optional[int]
+    max: int | None
 
     def __new__(cls, value):
         return JSGArray(cls.variable_name, cls.context, cls.typ, cls.min, cls.max, value)
 
 
-def ArrayFactory(name: str, context: JSGContext, typ: type, min_: int, max_: Optional[int]) -> type(ArrayWrapper):
+def ArrayFactory(name: str, context: JSGContext, typ: type, min_: int, max_: int | None) -> type(ArrayWrapper):
     factory = type(name, (ArrayWrapper,), dict())
     factory.variable_name = name
     factory.context = context

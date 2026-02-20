@@ -1,5 +1,4 @@
 import datetime
-from typing import List, Optional
 
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser_impl import __version__
@@ -31,7 +30,7 @@ _jsg_python_header = '''# Auto generated from {infile} by PyJSG version {version
 
 
 class JSGDocParser(jsgParserVisitor):
-    def __init__(self, context: Optional[JSGDocContext] = None):
+    def __init__(self, context: JSGDocContext | None = None):
         jsgParserVisitor.__init__(self)
         self._context = JSGDocContext() if context is None else context
         self.text: str = ""
@@ -63,7 +62,7 @@ class JSGDocParser(jsgParserVisitor):
                                            original_shex='# ' + self.text if include_original_shex else "",
                                            body=body)
 
-    def undefined_tokens(self) -> List[str]:
+    def undefined_tokens(self) -> list[str]:
         """
         Return a list of undefined tokens
         :return:

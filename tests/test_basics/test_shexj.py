@@ -2,7 +2,7 @@ import os
 import unittest
 from contextlib import redirect_stdout
 from io import StringIO
-from typing import Optional, TextIO, cast
+from typing import TextIO, cast
 
 import requests
 from dict_compare import compare_dicts
@@ -124,7 +124,7 @@ class FileValidator:
         return True
 
 
-def download_github_file(github_url: str) -> Optional[str]:
+def download_github_file(github_url: str) -> str | None:
     """
     Download the file in github_url
     :param github_url: github url to download

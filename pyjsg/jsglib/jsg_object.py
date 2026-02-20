@@ -1,6 +1,5 @@
-import sys
 from collections import OrderedDict
-from typing import List, Dict, Any, cast, Type, Optional, Union, TextIO, Tuple
+from typing import Any, cast, Type, TextIO
 
 from jsonasobj import JsonObj
 
@@ -14,15 +13,12 @@ from pyjsg.jsglib import AnyType
 from pyjsg.jsglib.logger import Logger
 from pyjsg.jsglib.conformance import conforms
 
-if sys.version_info < (3, 7):
-    from .typing_patch_36 import is_union, proc_forward
-else:
-    from .typing_patch_37 import is_union, proc_forward
+from .typing_patch_37 import is_union, proc_forward
 
 
 class JSGObjectMeta(type):
-    _reference_types: List["JSGObject"] = []
-    _reference_names: List[str]                 # Names of objects in _reference_types
+    _reference_types: list["JSGObject"] = []
+    _reference_names: list[str]                 # Names of objects in _reference_types
 
     def __init__(cls, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,9 +32,9 @@ class JSGObject(JsonObj, JSGValidateable, metaclass=JSGObjectMeta):
     Note that methods and variables in JSGObject should always begin with "_", as we currently restrict the set of
     JSON names to those that begin with [a-zA-Z]
     """
-    _reference_types: List["JSGObject"] = []        # Types that can be used as compound constructors
-    _reference_names: List[str] = []                # Names of the reference types for assignment testing
-    _members: Dict[str, type] = {}                  # Names of actual member elements
+    _reference_types: list["JSGObject"] = []        # Types that can be used as compound constructors
+    _reference_names: list[str] = []                # Names of the reference types for assignment testing
+    _members: dict[str, type] = {}                  # Names of actual member elements
     _strict: bool = True                            # True means no additional members allowed, False means "open"
 
     def __init__(self, context: JSGContext, **kwargs):
@@ -105,7 +101,7 @@ class JSGObject(JsonObj, JSGValidateable, metaclass=JSGObjectMeta):
         setattr(self, item, type(attr)(None) if issubclass(type(attr), JSGString) else None)
 
     @staticmethod
-    def _strip_nones(d: Dict[str, Any])-> Dict[str, Any]:
+    def _strip_nones(d: dict[str, Any])-> dict[str, Any]:
         """
         An attribute with type None is equivalent to an absent attribute.
         :param d: Object with attributes
@@ -163,7 +159,7 @@ class JSGObject(JsonObj, JSGValidateable, metaclass=JSGObjectMeta):
                 return False
         return True
 
-    def _is_valid(self, log_file: Optional[Union[Logger, TextIO]] = None) -> bool:
+    def _is_valid(self, log_file: Logger | TextIO | None = None) -> bool:
         log = Logger() if log_file is None else log_file if isinstance(log_file, Logger) else Logger(log_file)
         nerrors = log.nerrors
 
@@ -189,7 +185,7 @@ class JSGObject(JsonObj, JSGValidateable, metaclass=JSGObjectMeta):
 
         return log.nerrors == nerrors
 
-    def _map_jsg_type(self, name: str, element: Any, poss_types: Union[type, Tuple[type]]) -> Optional[JSGValidateable]:
+    def _map_jsg_type(self, name: str, element: Any, poss_types: type | tuple[type]) -> JSGValidateable | None:
         def _wrap(ty, el):
             # The first option is when we are assigning already loaded types
             # The second option addresses the optional situation
@@ -211,7 +207,7 @@ class JSGObject(JsonObj, JSGValidateable, metaclass=JSGObjectMeta):
                 return _wrap(typ, element)
         return None
 
-    def _jsg_type_for(self, name: str, element: Any, poss_types: Union[type, Tuple[type]]) -> JSGValidateable:
+    def _jsg_type_for(self, name: str, element: Any, poss_types: type | tuple[type]) -> JSGValidateable:
         et = self._map_jsg_type(name, element, poss_types)
         if et is not None:
             return et
@@ -251,7 +247,7 @@ class Object(JSGObject):
     """
     _strict = False
 
-    def __init__(self, variable_name: str,  _context: JSGContext, value: Optional[JsonObj]):
+    def __init__(self, variable_name: str,  _context: JSGContext, value: JsonObj | None):
         self._variable_name = variable_name
         if value is not None and not isinstance(value, JsonObj):
             raise ValueError(f'{variable_name}: Invalid {self._class_name} value: "{value}"')

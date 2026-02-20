@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional, Union, TextIO
+from typing import TextIO
 
 from pyjsg.jsglib.logger import Logger
 
@@ -9,7 +9,7 @@ class JSGValidateable:
     Mixin -- any class with an _is_valid function
     """
     @abstractmethod
-    def _is_valid(self, log: Optional[Union[TextIO, Logger]] = None) -> bool:
+    def _is_valid(self, log: TextIO | Logger | None = None) -> bool:
         """ Determine whether the element is valid
 
         :param log: Logger or IO device to record errors

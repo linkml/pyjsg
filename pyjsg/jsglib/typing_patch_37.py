@@ -1,13 +1,14 @@
 import sys
-from collections.abc import Iterable
+from collections.abc import Iterable, Callable
 
+from typing import Union
 # Typing_patch module for Python 3.7
 
 if sys.version_info >= (3, 7):
-    from typing import Dict, Any, Union, ForwardRef, Callable, Type, _eval_type
+    from typing import Any, ForwardRef, _eval_type
 
 
-def proc_forward(etype, namespace: Dict[str, Any]):
+def proc_forward(etype, namespace: dict[str, Any]):
     """ Resolve etype to an actual type if it is a forward reference """
     return _eval_type(etype, namespace, namespace) if type(etype) is ForwardRef else etype
 
@@ -25,11 +26,11 @@ def is_dict(etype) -> bool:
 
 
 def is_iterable(etype) -> bool:
-    """ Determine whether etype is a List or other iterable """
+    """ Determine whether etype is a list or other iterable """
     return getattr(etype, '__origin__', None) is not None and issubclass(etype.__origin__, Iterable)
 
 
-def union_conforms(element: Union, etype, namespace: Dict[str, Any], conforms: Callable) -> bool:
+def union_conforms(element: Union, etype, namespace: dict[str, Any], conforms: Callable) -> bool:
     """ Determine whether element conforms to at least one of the types in etype
 
     :param element: element to test

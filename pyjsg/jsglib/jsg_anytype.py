@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union, TextIO, List
+from typing import Any, TextIO
 
 from pyjsg.jsglib.empty import Empty
 from pyjsg.jsglib.jsg_validateable import JSGValidateable
@@ -8,7 +8,7 @@ from pyjsg.jsglib.jsg_null import JSGNull
 from pyjsg.jsglib.jsg_strings import Boolean, Integer, Number, String
 from pyjsg.jsglib.logger import Logger
 
-any_types: List[type(JSGValidateable)] = [JSGNull, Boolean, Integer, Number, String]
+any_types: list[type(JSGValidateable)] = [JSGNull, Boolean, Integer, Number, String]
 
 
 class AnyTypeMeta(type):
@@ -47,7 +47,7 @@ class AnyType(JSGValidateable, metaclass=AnyTypeMeta):
 
         super().__init__(**kwargs)
 
-    def _is_valid(self, log: Optional[Union[TextIO, Logger]] = None) -> bool:
+    def _is_valid(self, log: TextIO | Logger | None = None) -> bool:
         return self.val is not Empty
 
     def __str__(self):
