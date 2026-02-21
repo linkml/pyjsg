@@ -1,5 +1,0 @@
-.TYPE type - person ;
-
-company {name: @string, "year founded": @int?, employees: person{2,}}
-person {name: @string gender:('m'|'f') "active":@bool details*}
-details {id: @string, }

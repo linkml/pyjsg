@@ -16,7 +16,7 @@ class l(jsg.JSGObject):
 
     def __init__(self,
                  e: typing.List[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.e = e
 

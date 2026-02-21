@@ -1,4 +1,5 @@
 import os
+import uuid
 from argparse import ArgumentParser
 from io import StringIO
 from types import ModuleType
@@ -65,12 +66,11 @@ class JSGPython:
             with open(inp) as infile:
                 return infile.read()
 
-    def conforms(self, json: str, name: str = "", verbose: bool=False) -> ValidationResult:
+    def conforms(self, json: str, name: str = "") -> ValidationResult:
         """ Determine whether json conforms with the JSG specification
 
         :param json: JSON string, URI to JSON or file name with JSON
         :param name: Test name for ValidationResult -- printed in dx if present
-        :param verbose: True means print the response
         :return: pass/fail + fail reason
         """
         json = self._to_string(json) if not self.is_json(json) else json

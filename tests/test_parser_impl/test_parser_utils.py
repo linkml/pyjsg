@@ -1,42 +1,38 @@
-import unittest
-
+import keyword
 from pyjsg.parser_impl.parser_utils import flatten, flatten_unique, as_set, is_valid_python, esc_kw
 
 
-class ParserUtilsTestCase(unittest.TestCase):
-
-    def test_flatten(self) -> None:
-        self.assertEqual([], flatten([]))
-        self.assertEqual([1, 2, 3, 4, 5, 6], flatten([1, [2], [3, [4, 5], [6], []]]))
-        self.assertEqual(["a", "c", "a", "e", "e", "a"], flatten([["a", "c"], ["a", "e"], ["e", "a"]]))
-
-    def test_flatten_unique(self) -> None:
-        self.assertEqual([], flatten_unique([]))
-        self.assertEqual([1, 2, 3, 4, 5, 6], flatten_unique([1, [2], [3, [4, 5], [[[6]]], []]]))
-        self.assertEqual(["a", "c", "e"], flatten_unique([["a", "c"], ["a", "e"], ["e", "a"]]))
-
-    def test_as_set(self) -> None:
-        self.assertEqual(set(), as_set([]))
-        self.assertEqual({1, 2, 3, 4, 5, 6}, as_set([1, [2], [3, [4, 5], [[[6]]], []]]))
-        self.assertEqual({"a", "c", "e"}, as_set([["a", "c"], ["a", "e"], ["e", "a"]]))
-
-    def test_is_valid_python(self) -> None:
-        self.assertTrue(is_valid_python('a'))
-        self.assertTrue(is_valid_python('is_valid_python'))
-        self.assertFalse(is_valid_python('def'))
-        self.assertFalse(is_valid_python('class'))
-        self.assertFalse(is_valid_python('a 1'))
-        self.assertFalse(is_valid_python('a-1'))
-        self.assertFalse(is_valid_python('1a'))
-
-    def test_esc_kw(self) -> None:
-        import keyword
-        self.assertEqual('a', esc_kw('a'))
-        self.assertEqual('def_', esc_kw('def'))
-        for k in keyword.kwlist:
-            self.assertEqual(k + '_', esc_kw(k))
-            self.assertEqual(k + 'x', esc_kw((k + 'x')))
+def test_flatten():
+    assert flatten([]) == []
+    assert flatten([1, [2], [3, [4, 5], [6], []]]) == [1, 2, 3, 4, 5, 6]
+    assert flatten([["a", "c"], ["a", "e"], ["e", "a"]]) == ["a", "c", "a", "e", "e", "a"]
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_flatten_unique():
+    assert flatten_unique([]) == []
+    assert flatten_unique([1, [2], [3, [4, 5], [[[6]]], []]]) == [1, 2, 3, 4, 5, 6]
+    assert flatten_unique([["a", "c"], ["a", "e"], ["e", "a"]]) == ["a", "c", "e"]
+
+
+def test_as_set():
+    assert as_set([]) == set()
+    assert as_set([1, [2], [3, [4, 5], [[[6]]], []]]) == {1, 2, 3, 4, 5, 6}
+    assert as_set([["a", "c"], ["a", "e"], ["e", "a"]]) == {"a", "c", "e"}
+
+
+def test_is_valid_python():
+    assert is_valid_python('a')
+    assert is_valid_python('is_valid_python')
+    assert not is_valid_python('def')
+    assert not is_valid_python('class')
+    assert not is_valid_python('a 1')
+    assert not is_valid_python('a-1')
+    assert not is_valid_python('1a')
+
+
+def test_esc_kw():
+    assert esc_kw('a') == 'a'
+    assert esc_kw('def') == 'def_'
+    for k in keyword.kwlist:
+        assert esc_kw(k) == k + '_'
+        assert esc_kw(k + 'x') == k + 'x'

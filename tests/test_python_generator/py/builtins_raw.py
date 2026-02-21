@@ -22,7 +22,7 @@ class doc(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         setattr(self, 'v 1', _kwargs.get('v 1', None))
         setattr(self, 'v 2', _kwargs.get('v 2', None))
@@ -40,7 +40,7 @@ class another_object(jsg.JSGObject):
     _strict = False
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 

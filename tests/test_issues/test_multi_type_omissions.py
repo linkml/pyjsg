@@ -1,7 +1,3 @@
-import unittest
-
-from tests.utils.harness import Harness
-
 jsg1 = '''
 .TYPE t - id val ;
 doc {a:.,}
@@ -10,18 +6,15 @@ val {c: @string}
 '''
 
 
-class MultiTypeOmissionsTestCase(Harness):
-    def test_one_pass(self):
-        self.do_test(jsg1, '{"t": "doc", "a": {"b": 173}}')
-        self.do_test(jsg1, '{"c": "sails"}')
-        self.do_test(jsg1, '{"b": -117}')
-
-    def test_one_fail(self):
-        self.do_test(jsg1, '{"t": "doc", "a": {"b": "x"}}', False, False, False, 'Invalid Integer value: "x"')
-        self.do_test(jsg1, '{"c": 112}', False, False, False, 'Invalid String value "112"')
-        self.do_test(jsg1, '{"b": "test"}', False, False, False, 'Invalid Integer value: "x"')
-        self.do_test(jsg1, '{"d": 117}', False)
+def test_one_pass(do_test_harness, jsg1):
+    do_test_harness(jsg1, '{"t": "doc", "a": {"b": 173}}')
+    do_test_harness(jsg1, '{"c": "sails"}')
+    do_test_harness(jsg1, '{"b": -117}')
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_one_fail(do_test_harness, jsg1):
+    do_test_harness(jsg1, '{"t": "doc", "a": {"b": "x"}}', False, False, False, 'Invalid Integer value: "x"')
+    do_test_harness(jsg1, '{"c": 112}', False, False, False, 'Invalid String value "112"')
+    do_test_harness(jsg1, '{"b": "test"}', False, False, False, 'Invalid Integer value: "x"')
+    do_test_harness(jsg1, '{"d": 117}', False)
+

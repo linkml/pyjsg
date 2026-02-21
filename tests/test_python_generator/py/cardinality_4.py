@@ -15,7 +15,7 @@ class doc(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         setattr(self, 'l23 38n', _kwargs.get('l23 38n', None))
 

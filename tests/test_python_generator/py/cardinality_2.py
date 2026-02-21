@@ -34,7 +34,7 @@ class doc(jsg.JSGObject):
                  l1na: typing.List[str] = None,
                  optl0n: typing.Optional[typing.List[str]] = None,
                  optl1n: typing.Optional[typing.List[str]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.opt = opt
         self.req = req

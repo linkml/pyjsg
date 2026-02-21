@@ -10,10 +10,6 @@ import pyjsg.jsglib.jsg_null
 from pyjsg.parser_impl.jsg_lexerruleblock_parser import JSGLexerRuleBlock
 from tests.test_basics.parser import parse
 
-# Note: Python tightened up the re.escape() functionality in version 3.7 -- it had previously been fairly promiscuous
-# when deciding what to escape.  The escape call itself can be found in jsg_lexerruleblock_parser.py.add_string().
-# This is why the conditionals below
-
 # Force the needed imports
 _x = isinstance(1, (jsg.JSGPattern, jsg.JSGString, jsg.String, jsg.Number, Double, jsg.Boolean, jsg.Integer,
                     pyjsg.jsglib.jsg_null.JSGNull, jsg.JSGArray, JsonObj))
@@ -58,12 +54,8 @@ t20 = "NULL_: .* @null ;"
 # t22 = "OBJECT_: .* @object ;"
 t23 = "POS_INT : [0]|([1-9][0-9]*) @int ;"
 
-if sys.version_info < (3, 7):
-    s1 = "pattern: r'(({PN_CHARS})|\.|\:|\/|\\\\|\#|\@|\%|\&|({UCHAR}))*'"
-    s2 = "pattern: r'_\:(({PN_CHARS_U})|[0-9])((({PN_CHARS})|\.)*({PN_CHARS}))?'"
-else:
-    s1 = "pattern: r'(({PN_CHARS})|\.|:|/|\\\\|\#|@|%|\&|({UCHAR}))*'"
-    s2 = "pattern: r'_:(({PN_CHARS_U})|[0-9])((({PN_CHARS})|\.)*({PN_CHARS}))?'"
+s1 = "pattern: r'(({PN_CHARS})|\.|:|/|\\\\|\#|@|%|\&|({UCHAR}))*'"
+s2 = "pattern: r'_:(({PN_CHARS_U})|[0-9])((({PN_CHARS})|\.)*({PN_CHARS}))?'"
 s3 = "pattern: r'true|false'"
 s4 = "pattern: r'[+-]?[0-9]+'"
 s5 = "pattern: r'[+-]?[0-9]*\.[0-9]+'"

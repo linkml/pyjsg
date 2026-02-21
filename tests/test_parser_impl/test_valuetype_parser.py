@@ -1,4 +1,4 @@
-import unittest
+import pytest
 from typing import cast
 
 from pyjsg.parser_impl.jsg_objectexpr_parser import JSGObjectExpr
@@ -21,140 +21,134 @@ ref_tests = [("A", "ID"),
              ("AA", "LEXER_ID_REF"),
              ("HEX_NUM", "LEXER_ID_REF")]
 
-constructor_tests = [
-    ("@string", "jsg.String(getter('v 1', None))"),
-    ("@number", "jsg.Number(getter('v 1', None))"),
-    ("@int", "jsg.Integer(getter('v 1', None))"),
-    ("@bool", "jsg.Boolean(getter('v 1', None))"),
-    ("@null", "jsg.JSGNull(getter('v 1', None))"),
-    ("@array", "Array('k', self._context, jsg.AnyType, 0, None, getter('v 1', None))"),
-    ("@object", "jsg.Object('k', self._context, getter('v 1', None))"),
-    (".", "jsg.AnyType('k', self._context, getter('v 1', None))")]
+
+@pytest.mark.parametrize("text,sig,typ_,mt_typ", builtin_tests, ids=[t[0] for t in builtin_tests])
+def test_builtins(text, sig, typ_, mt_typ):
+    t = cast(JSGValueType, parse(text, "valueType", JSGValueType))
+    assert t.signature_type() == sig, text
+    assert t.python_type() == typ_, text
+    assert str(t) == f"valueType: builtinValueType: {'jsg.AnyType' if text == '.' else text}", text
+    assert t.mt_value() == mt_typ, text
+    assert t.members_entries() == [], text
+    assert t.dependency_list() == [], text
 
 
-class ValueTypeTestCase(unittest.TestCase):
-    def test_builtins(self):
-        for text, sig, typ_, mt_typ in builtin_tests:
-            t = cast(JSGValueType, parse(text, "valueType", JSGValueType))
-            self.assertEqual(sig, t.signature_type(), text)
-            self.assertEqual(typ_, t.python_type(), text)
-            self.assertEqual(f"valueType: builtinValueType: {'jsg.AnyType' if text == '.' else text}", str(t), text)
-            self.assertEqual(mt_typ, t.mt_value(), text)
-            self.assertEqual([], t.members_entries(), text)
-            self.assertEqual([], t.dependency_list(), text)
+@pytest.mark.parametrize("text,typ", ref_tests, ids=[t[0] for t in ref_tests])
+def test_refs(text, typ):
+    t = cast(JSGValueType, parse(text, "valueType", JSGValueType))
+    assert t.signature_type() == (f'Undefined({text})' if typ != 'LEXER_ID_REF' else text)
+    assert t.python_type() == (f'Undefined({text})' if typ != 'LEXER_ID_REF' else 'str')
+    assert str(t) == f"valueType: {typ}: {text}"
+    assert t.dependency_list() == [text]
+    assert t.members_entries() == []
+    assert t.mt_value() == "None"
 
-    def test_refs(self):
-        for text, typ in ref_tests:
-            t = cast(JSGValueType, parse(text, "valueType", JSGValueType))
-            self.assertEqual(f'Undefined({text})' if typ != 'LEXER_ID_REF' else text, t.signature_type())
-            self.assertEqual(f'Undefined({text})' if typ != 'LEXER_ID_REF' else 'str', t.python_type())
-            self.assertEqual(f"valueType: {typ}: {text}", str(t))
-            self.assertEqual([text], t.dependency_list())
-            self.assertEqual([], t.members_entries())
-            self.assertEqual("None", t.mt_value())
 
-    def test_ref_escapes(self):
-        self.assertEqual("Undefined(Class)", cast(JSGValueType, parse("Class", "valueType", JSGValueType))
-                         .signature_type())
-        t = cast(JSGValueType, parse("class", "valueType", JSGValueType))
-        self.assertEqual("Undefined(class_)", t.signature_type())
-        self.assertEqual("Undefined(class_)", t.python_type())
-        self.assertEqual([], t.members_entries())
+def test_ref_escapes():
+    assert cast(JSGValueType, parse("Class", "valueType", JSGValueType)).signature_type() == "Undefined(Class)"
+    t = cast(JSGValueType, parse("class", "valueType", JSGValueType))
+    assert t.signature_type() == "Undefined(class_)"
+    assert t.python_type() == "Undefined(class_)"
+    assert t.members_entries() == []
 
-    def test_literals(self):
-        t = cast(JSGValueType, parse("'literal'", "valueType", JSGValueType))
-        self.assertEqual("_Anon1", t.signature_type())
-        self.assertEqual("str", t.python_type())
-        self.assertEqual("valueType: STRING: pattern: r'literal'", str(t))
 
-    def test_any(self):
-        t = cast(JSGValueType, parse("id = .;", "valueTypeMacro", JSGValueType))
-        self.assertEqual("object", t.python_type())
-        self.assertEqual("jsg.AnyTypeFactory('{name}', _CONTEXT)", t.signature_type())
-        self.assertEqual("jsg.Empty", t.mt_value())
-        self.assertEqual([], t.members_entries())
-        self.assertEqual([], t.dependency_list())
-        self.assertEqual("valueType: builtinValueType: jsg.AnyType", str(t))
+def test_literals():
+    t = cast(JSGValueType, parse("'literal'", "valueType", JSGValueType))
+    assert t.signature_type() == "_Anon1"
+    assert t.python_type() == "str"
+    assert str(t) == "valueType: STRING: pattern: r'literal'"
 
-    def test_alternatives(self):
-        t = cast(JSGValueType, parse("id = ('x'|'y') ;", "valueTypeMacro", JSGValueType))
-        self.assertEqual("_Anon1", t.signature_type())
-        self.assertEqual("str", t.python_type())
-        self.assertEqual("valueType: STRING: pattern: r'(x)|(y)'", str(t))
-        t = cast(JSGValueType, parse("id = (Aa | Bb | (Cc | Dd)) ;", "valueTypeMacro", JSGValueType))
-        self.assertEqual("typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]",
-                         t.signature_type())
-        self.assertEqual("typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]",
-                         t.python_type())
-        self.assertEqual(t.dependency_list(), ['Aa', 'Bb', 'Cc', 'Dd'])
-        self.assertEqual("valueType: (Undefined(Aa) | Undefined(Bb) | typing.Union[Undefined(Cc), Undefined(Dd)])",
-                         str(t))
-        self.assertEqual([], t.members_entries())
-        t = cast(JSGValueType, parse("id = (Aa | Bb | 'foo' | (Cc | Dd) | 'bar') ;", "valueTypeMacro", JSGValueType))
-        self.assertEqual("typing.Union[_Anon1, Undefined(Aa), Undefined(Bb), "
-                         "typing.Union[Undefined(Cc), Undefined(Dd)]]",
-                         t.signature_type())
-        self.assertEqual("typing.Union[str, Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]",
-                         t.python_type())
-        self.assertEqual(['_Anon1', 'Aa', 'Bb', 'Cc', 'Dd'], t.dependency_list())
-        self.assertEqual("valueType: ((STRING: pattern: r'(foo)|(bar)') | Undefined(Aa) | Undefined(Bb) | "
-                         "typing.Union[Undefined(Cc), Undefined(Dd)])", str(t))
 
-    def test_array(self):
-        t = cast(JSGValueType, parse('id = [.] ;', "valueTypeMacro", JSGValueType))
-        self.assertEqual('valueType: arrayExpr: [valueType: builtinValueType: jsg.AnyType]', str(t))
-        self.assertEqual([], t.dependency_list())
-        self.assertEqual([], t.members_entries())
-        self.assertEqual('typing.List[object]', t.python_type())
-        self.assertEqual("jsg.ArrayFactory('{name}', _CONTEXT, jsg.AnyTypeFactory('{name}', _CONTEXT), 0, None)",
-                         t.signature_type())
-        self.assertEqual('None', t.mt_value())
+def test_any():
+    t = cast(JSGValueType, parse("id = .;", "valueTypeMacro", JSGValueType))
+    assert t.python_type() == "object"
+    assert t.signature_type() == "jsg.AnyTypeFactory('{name}', _CONTEXT)"
+    assert t.mt_value() == "jsg.Empty"
+    assert t.members_entries() == []
+    assert t.dependency_list() == []
+    assert str(t) == "valueType: builtinValueType: jsg.AnyType"
 
-        t = cast(JSGValueType, parse('id = [@int | "AB*" +] ;', "valueTypeMacro", JSGValueType))
-        self.assertEqual("valueType: arrayExpr: [(valueType: builtinValueType: "
-                         "@int | valueType: STRING: pattern: r'AB\*')+]", str(t))
-        self.assertEqual(['_Anon1'], t.dependency_list())
-        self.assertEqual([], t.members_entries())
-        self.assertEqual('typing.List[typing.Union[int, str]]', t.python_type())
-        self.assertEqual("jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[jsg.Integer, _Anon1], 1, None)",
-                         t.signature_type())
-        self.assertEqual('None', t.mt_value())
 
-    def test_lexeridref(self):
-        t = cast(JSGValueType, parse('("[a-z]*" | "0-9*")', "valueType", JSGValueType))
-        self.assertEqual("valueType: STRING: pattern: r'(\[a\-z\]\*)|(0\-9\*)'", str(t))
-        self.assertEqual("_Anon1", t.signature_type())
-        self.assertEqual("str", t.python_type())
-        self.assertEqual("None", t.mt_value())
-        self.assertEqual([], t.members_entries())
+def test_alternatives():
+    t = cast(JSGValueType, parse("id = ('x'|'y') ;", "valueTypeMacro", JSGValueType))
+    assert t.signature_type() == "_Anon1"
+    assert t.python_type() == "str"
+    assert str(t) == "valueType: STRING: pattern: r'(x)|(y)'"
 
-        t = cast(JSGValueType, parse('("[a-z]*" | "0-9*" | ID)', "valueType", JSGValueType))
-        self.assertEqual("valueType: ((STRING: pattern: r'(\[a\-z\]\*)|(0\-9\*)') | ID)", str(t))
-        self.assertEqual("typing.Union[_Anon1, ID]", t.signature_type())
-        self.assertEqual("typing.Union[str, str]", t.python_type())
-        self.assertEqual("None", t.mt_value())
-        self.assertEqual([], t.members_entries())
+    t = cast(JSGValueType, parse("id = (Aa | Bb | (Cc | Dd)) ;", "valueTypeMacro", JSGValueType))
+    assert t.signature_type() == "typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]"
+    assert t.python_type() == "typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]"
+    assert t.dependency_list() == ['Aa', 'Bb', 'Cc', 'Dd']
+    assert str(t) == "valueType: (Undefined(Aa) | Undefined(Bb) | typing.Union[Undefined(Cc), Undefined(Dd)])"
+    assert t.members_entries() == []
 
-    def test_anon_typeid(self):
-        t = cast(JSGValueType, parse("{a: @int b: @string+}", "valueType", JSGValueType))
-        self.assertEqual('valueType: (anonymous: _Anon1): objectExpr: simple object', str(t))
-        self.assertEqual('_Anon1', t.signature_type())
-        self.assertEqual('_Anon1', t.python_type())
-        self.assertEqual('None', t.mt_value())
-        self.assertEqual([], t.members_entries())
+    t = cast(JSGValueType, parse("id = (Aa | Bb | 'foo' | (Cc | Dd) | 'bar') ;", "valueTypeMacro", JSGValueType))
+    assert t.signature_type() == ("typing.Union[_Anon1, Undefined(Aa), Undefined(Bb), "
+                                   "typing.Union[Undefined(Cc), Undefined(Dd)]]")
+    assert t.python_type() == ("typing.Union[str, Undefined(Aa), Undefined(Bb), "
+                                "typing.Union[Undefined(Cc), Undefined(Dd)]]")
+    assert t.dependency_list() == ['_Anon1', 'Aa', 'Bb', 'Cc', 'Dd']
+    assert str(t) == ("valueType: ((STRING: pattern: r'(foo)|(bar)') | Undefined(Aa) | Undefined(Bb) | "
+                      "typing.Union[Undefined(Cc), Undefined(Dd)])")
 
-    def test_objectmacro_opts(self):
-        t = cast(JSGValueType, parse("a = @string | KT | {} ;", "valueTypeMacro", JSGValueType))
-        self.assertEqual('valueType: (jsg.String | KT | _Anon1)', str(t))
-        self.assertEqual('typing.Union[jsg.String, KT, _Anon1]', t.signature_type())
-        self.assertEqual('typing.Union[str, str, _Anon1]', t.python_type())
-        self.assertEqual('None', t.mt_value())
-        self.assertEqual([], t.members_entries())
 
-    def test_objectmacro(self):
-        t = cast(JSGObjectExpr, parse("stringFacet = (length minlength maxlength):"
-                                      "INTEGER pattern:STRING flags:STRING? ;", "objectMacro", JSGObjectExpr))
-        self.assertEqual("""class stringFacet(jsg.JSGObject):
+def test_array():
+    t = cast(JSGValueType, parse('id = [.] ;', "valueTypeMacro", JSGValueType))
+    assert str(t) == 'valueType: arrayExpr: [valueType: builtinValueType: jsg.AnyType]'
+    assert t.dependency_list() == []
+    assert t.members_entries() == []
+    assert t.python_type() == 'typing.List[object]'
+    assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, jsg.AnyTypeFactory('{name}', _CONTEXT), 0, None)"
+    assert t.mt_value() == 'None'
+
+    t = cast(JSGValueType, parse('id = [@int | "AB*" +] ;', "valueTypeMacro", JSGValueType))
+    assert str(t) == ("valueType: arrayExpr: [(valueType: builtinValueType: "
+                      "@int | valueType: STRING: pattern: r'AB\\*')+]")
+    assert t.dependency_list() == ['_Anon1']
+    assert t.members_entries() == []
+    assert t.python_type() == 'typing.List[typing.Union[int, str]]'
+    assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[jsg.Integer, _Anon1], 1, None)"
+    assert t.mt_value() == 'None'
+
+
+def test_lexeridref():
+    t = cast(JSGValueType, parse('("[a-z]*" | "0-9*")', "valueType", JSGValueType))
+    assert str(t) == "valueType: STRING: pattern: r'(\\[a\\-z\\]\\*)|(0\\-9\\*)'"
+    assert t.signature_type() == "_Anon1"
+    assert t.python_type() == "str"
+    assert t.mt_value() == "None"
+    assert t.members_entries() == []
+
+    t = cast(JSGValueType, parse('("[a-z]*" | "0-9*" | ID)', "valueType", JSGValueType))
+    assert str(t) == "valueType: ((STRING: pattern: r'(\\[a\\-z\\]\\*)|(0\\-9\\*)') | ID)"
+    assert t.signature_type() == "typing.Union[_Anon1, ID]"
+    assert t.python_type() == "typing.Union[str, str]"
+    assert t.mt_value() == "None"
+    assert t.members_entries() == []
+
+
+def test_anon_typeid():
+    t = cast(JSGValueType, parse("{a: @int b: @string+}", "valueType", JSGValueType))
+    assert str(t) == 'valueType: (anonymous: _Anon1): objectExpr: simple object'
+    assert t.signature_type() == '_Anon1'
+    assert t.python_type() == '_Anon1'
+    assert t.mt_value() == 'None'
+    assert t.members_entries() == []
+
+
+def test_objectmacro_opts():
+    t = cast(JSGValueType, parse("a = @string | KT | {} ;", "valueTypeMacro", JSGValueType))
+    assert str(t) == 'valueType: (jsg.String | KT | _Anon1)'
+    assert t.signature_type() == 'typing.Union[jsg.String, KT, _Anon1]'
+    assert t.python_type() == 'typing.Union[str, str, _Anon1]'
+    assert t.mt_value() == 'None'
+    assert t.members_entries() == []
+
+
+def test_objectmacro():
+    t = cast(JSGObjectExpr, parse("stringFacet = (length minlength maxlength):"
+                                  "INTEGER pattern:STRING flags:STRING? ;", "objectMacro", JSGObjectExpr))
+    assert t.as_python('stringFacet').strip() == """class stringFacet(jsg.JSGObject):
     _reference_types = []
     _members = {'length': INTEGER,
                 'minlength': INTEGER,
@@ -169,18 +163,18 @@ class ValueTypeTestCase(unittest.TestCase):
                  maxlength: str = None,
                  pattern: str = None,
                  flags: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.length = length
         self.minlength = minlength
         self.maxlength = maxlength
         self.pattern = pattern
-        self.flags = flags""", t.as_python('stringFacet').strip())
-        self.assertEqual(['INTEGER', 'STRING'], t.dependency_list())
+        self.flags = flags"""
+    assert t.dependency_list() == ['INTEGER', 'STRING']
 
-        t = cast(JSGObjectExpr, parse("stringFacet = (length minlength maxlength):INTEGER "
-                                      "pattern:STRING | flags:STRING? ;", "objectMacro", JSGObjectExpr))
-        self.assertEqual("""class stringFacet(jsg.JSGObject):
+    t = cast(JSGObjectExpr, parse("stringFacet = (length minlength maxlength):INTEGER "
+                                  "pattern:STRING | flags:STRING? ;", "objectMacro", JSGObjectExpr))
+    assert t.as_python('stringFacet').strip() == """class stringFacet(jsg.JSGObject):
     _reference_types = [_Anon1_1_, _Anon1_2_]
     _members = {'length': typing.Optional[INTEGER],
                 'minlength': typing.Optional[INTEGER],
@@ -191,7 +185,7 @@ class ValueTypeTestCase(unittest.TestCase):
 
     def __init__(self,
                  opts_: typing.Union[_Anon1_1_, _Anon1_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, _Anon1_1_):
@@ -202,11 +196,11 @@ class ValueTypeTestCase(unittest.TestCase):
             elif isinstance(opts_, _Anon1_2_):
                 self.flags = opts_.flags
             else:
-                raise ValueError(f"Unrecognized value type: {opts_}")""", t.as_python('stringFacet').strip())
-        self.assertEqual(['INTEGER', 'STRING', '_Anon1_1_', '_Anon1_2_'], t.dependency_list())
+                raise ValueError(f"Unrecognized value type: {opts_}")"""
+    assert t.dependency_list() == ['INTEGER', 'STRING', '_Anon1_1_', '_Anon1_2_']
 
-        t = cast(JSGObjectExpr, parse("x = a:@number | b:@null | ;", "objectMacro", JSGObjectExpr))
-        self.assertEqual("""class stringFacet(jsg.JSGObject):
+    t = cast(JSGObjectExpr, parse("x = a:@number | b:@null | ;", "objectMacro", JSGObjectExpr))
+    assert t.as_python('stringFacet').strip() == """class stringFacet(jsg.JSGObject):
     _reference_types = [_Anon1_1_, _Anon1_2_, _Anon1_3_]
     _members = {'a': typing.Optional[jsg.Number],
                 'b': typing.Optional[jsg.JSGNull]}
@@ -214,7 +208,7 @@ class ValueTypeTestCase(unittest.TestCase):
 
     def __init__(self,
                  opts_: typing.Union[_Anon1_1_, _Anon1_2_, _Anon1_3_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, _Anon1_1_):
@@ -224,10 +218,5 @@ class ValueTypeTestCase(unittest.TestCase):
             elif isinstance(opts_, _Anon1_3_):
                 pass
             else:
-                raise ValueError(f"Unrecognized value type: {opts_}")""",
-                         t.as_python('stringFacet').strip())
-        self.assertEqual(['_Anon1_1_', '_Anon1_2_', '_Anon1_3_'], t.dependency_list())
-
-
-if __name__ == '__main__':
-    unittest.main()
+                raise ValueError(f"Unrecognized value type: {opts_}")"""
+    assert t.dependency_list() == ['_Anon1_1_', '_Anon1_2_', '_Anon1_3_']

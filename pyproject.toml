@@ -57,8 +57,10 @@ packages = ["pyjsg"]
 
 [dependency-groups]
 dev = [
-  "requests",
-  "yadict_compare",
+    "requests",
+    "yadict_compare",
+    "pytest",
+    "pytest-forked",
 ]
 
 [tool.black]

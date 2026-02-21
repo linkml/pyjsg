@@ -1,139 +1,126 @@
-import unittest
-from typing import Union
+import pytest
 
 from pyjsg.jsglib import String, JSGPattern, Number, Integer, Boolean, JSGNull, Empty
 
 
-class JSGBuiltinsTestCase(unittest.TestCase):
-    def do_test(self,
-                cls,
-                val: Union[str, int, float, bool, None],
-                rslt: Union[str, int, float, bool]=None,
-                fail: bool=False) -> Union[str, int, float, bool]:
-        if fail:
-            with self.assertRaises(ValueError):
-                cls(val)
-        else:
-            t = cls(val)
-            self.assertEqual(rslt if rslt is not None else val, t)
-            if not isinstance(t, bool):
-                self.assertEqual(rslt if rslt is not None else val, t.val)
-            return t
+def test_string(do_builtin_test):
+    do_builtin_test(String, "a simple string")
+    do_builtin_test(String, True, "true", fail=True)
+    do_builtin_test(String, False, "false", fail=True)
+    do_builtin_test(String, 143, "143", fail=True)
+    do_builtin_test(String, 95.221E+5, "9522100.0", fail=True)
+    do_builtin_test(String, "95.221E+5")
+    do_builtin_test(String, "^<80>߿ࠀ࿿က쿿퀀퟿�𐀀𿿽񀀀󿿽􀀀􏿽$/")
+    do_builtin_test(String, "^\/\t\n\r\-\\\u0061\U0001D4B8$", "^\\/\t\n\r\\-\\a𝒸$")
+    do_builtin_test(String, None, fail=True)
+    do_builtin_test(String, -119, "-119", fail=True)
 
-    def test_string(self):
-        self.do_test(String, "a simple string")
-        self.do_test(String, True, "true", fail=True)
-        self.do_test(String, False, "false", fail=True)
-        self.do_test(String, 143, "143", fail=True)
-        self.do_test(String, 95.221E+5, "9522100.0", fail=True)
-        self.do_test(String, "95.221E+5")
-        self.do_test(String, "^<80>߿ࠀ࿿က쿿퀀퟿�𐀀𿿽񀀀󿿽􀀀􏿽$/")
-        self.do_test(String, "^\/\t\n\r\-\\\u0061\U0001D4B8$", "^\\/\t\n\r\\-\\a𝒸$")
-        self.do_test(String, None, fail=True)
-        self.do_test(String, -119, "-119", fail=True)
+    class PAT_STR(String):
+        pattern = JSGPattern(r'[a-z][0-9]+')
 
-        class PAT_STR(String):
-            pattern = JSGPattern(r'[a-z][0-9]+')
+    do_builtin_test(PAT_STR, 'a143')
 
-        self.do_test(PAT_STR, 'a143')
+    with pytest.raises(ValueError):
+        PAT_STR('17')
 
-        with self.assertRaises(ValueError):
-            x = PAT_STR('17')
+    class INT_STR(String):
+        pattern = JSGPattern(r'0|([1-9][0-9]*)')
 
-        class INT_STR(String):
-            pattern = JSGPattern(r'0|([1-9][0-9]*)')
+    do_builtin_test(INT_STR, "17")
 
-        self.do_test(INT_STR, "17")
-        # self.do_test(INT_STR, 17, "17")
-        with self.assertRaises(ValueError):
-            x = INT_STR("-17")
-        with self.assertRaises(ValueError):
-            x = INT_STR("something")
+    with pytest.raises(ValueError):
+        INT_STR("-17")
+    with pytest.raises(ValueError):
+        INT_STR("something")
 
-    def test_number(self):
-        self.assertIsInstance(self.do_test(Number, 42), float)
-        self.assertIsInstance(self.do_test(Number, -173), float)
-        self.assertIsInstance(self.do_test(Number, 0.1723), float)
-        with self.assertRaises(ValueError):
-            x = Number("+173.0003E-5")          # JSON doesn't allow plus signs
-        self.do_test(Number, "-173.0003E-5", -0.001730003)
 
-        class POS_NUMBER(Number):
-            pattern = JSGPattern(r'(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?')
+def test_number(do_builtin_test):
+    isinstance(do_builtin_test(Number, 42), float)
+    isinstance(do_builtin_test(Number, -173), float)
+    isinstance(do_builtin_test(Number, 0.1723), float)
+    with pytest.raises(ValueError):
+        Number("+173.0003E-5")          # JSON doesn't allow plus signs
+    do_builtin_test(Number, "-173.0003E-5", -0.001730003)
 
-        self.do_test(POS_NUMBER, 1003675)
-        with self.assertRaises(ValueError):
-            x = POS_NUMBER(-1)
-        with self.assertRaises(ValueError):
-            x = POS_NUMBER("-117.438")
+    class POS_NUMBER(Number):
+        pattern = JSGPattern(r'(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?')
 
-    def test_integer(self):
-        self.assertIsInstance(self.do_test(Integer, 42), int)
-        self.assertIsInstance(self.do_test(Integer, -173), int)
-        self.assertIsInstance(self.do_test(Integer, 0), int)
-        self.assertIsInstance(self.do_test(Integer, "-119221", -119221), int)
-        with self.assertRaises(ValueError):
-            x = Integer(0.1723)
-        with self.assertRaises(ValueError):
-            x = Integer("-173.0003E-5")
-        with self.assertRaises(ValueError):
-            x = Integer("a")
-        with self.assertRaises(ValueError):
-            x = Integer("")
-        with self.assertRaises(ValueError):
-            x = Integer(False)
-        with self.assertRaises(ValueError):
-            x = Integer(None)
+    do_builtin_test(POS_NUMBER, 1003675)
+    with pytest.raises(ValueError):
+        POS_NUMBER(-1)
+    with pytest.raises(ValueError):
+        POS_NUMBER("-117.438")
 
-        class NEG_INTEGER(Integer):
-            pattern = JSGPattern(r'-(0|[1-9][0-9]*)')
 
-        self.assertIsInstance(self.do_test(NEG_INTEGER, -119), int)
-        with self.assertRaises(ValueError):
-            x = NEG_INTEGER(17)
+def test_integer(do_builtin_test):
+    isinstance(do_builtin_test(Integer, 42), int)
+    isinstance(do_builtin_test(Integer, -173), int)
+    isinstance(do_builtin_test(Integer, 0), int)
+    isinstance(do_builtin_test(Integer, "-119221", -119221), int)
+    with pytest.raises(ValueError):
+        Integer(0.1723)
+    with pytest.raises(ValueError):
+        Integer("-173.0003E-5")
+    with pytest.raises(ValueError):
+        Integer("a")
+    with pytest.raises(ValueError):
+        Integer("")
+    with pytest.raises(ValueError):
+        Integer(False)
+    with pytest.raises(ValueError):
+        Integer(None)
 
-    def test_bool(self):
-        self.assertIsInstance(self.do_test(Boolean, True), bool)
-        self.assertIsInstance(self.do_test(Boolean, "True", True), bool)
-        self.assertIsInstance(self.do_test(Boolean, "true", True), bool)
-        self.assertIsInstance(self.do_test(Boolean, False), bool)
-        self.assertIsInstance(self.do_test(Boolean, "False", False), bool)
-        self.assertIsInstance(self.do_test(Boolean, "false", False), bool)
-        with self.assertRaises(ValueError):
-            Boolean(None)
-        with self.assertRaises(ValueError):
-            x = Boolean(0)
-        with self.assertRaises(ValueError):
-            x = Boolean("")
+    class NEG_INTEGER(Integer):
+        pattern = JSGPattern(r'-(0|[1-9][0-9]*)')
 
-        class TRUE_ONLY(Boolean):
-            pattern = Boolean.true_pattern
+    isinstance(do_builtin_test(NEG_INTEGER, -119), int)
+    with pytest.raises(ValueError):
+        NEG_INTEGER(17)
 
-        self.assertIsInstance(self.do_test(TRUE_ONLY, True), bool)
-        with self.assertRaises(ValueError):
-            x = TRUE_ONLY(False)
 
-    def test_incompatible_pattern(self):
-        class INCOMPAT(Integer):
-            pattern = JSGPattern(r'[a-z]+')
+def test_bool(do_builtin_test):
+    isinstance(do_builtin_test(Boolean, True), bool)
+    isinstance(do_builtin_test(Boolean, "True", True), bool)
+    isinstance(do_builtin_test(Boolean, "true", True), bool)
+    isinstance(do_builtin_test(Boolean, False), bool)
+    isinstance(do_builtin_test(Boolean, "False", False), bool)
+    isinstance(do_builtin_test(Boolean, "false", False), bool)
+    with pytest.raises(ValueError):
+        Boolean(None)
+    with pytest.raises(ValueError):
+        Boolean(0)
+    with pytest.raises(ValueError):
+        Boolean("")
 
-        with self.assertRaises(ValueError):
-            x = INCOMPAT("a")
+    class TRUE_ONLY(Boolean):
+        pattern = Boolean.true_pattern
 
-        with self.assertRaises(ValueError):
-            x = INCOMPAT(17)
+    isinstance(do_builtin_test(TRUE_ONLY, True), bool)
+    with pytest.raises(ValueError):
+        TRUE_ONLY(False)
 
-    def test_null(self):
-        self.assertIsNone(JSGNull(None).val)
-        self.assertIsNone(JSGNull(JSGNull).val)
-        with self.assertRaises(ValueError):
-            JSGNull(Empty)
-        with self.assertRaises(ValueError):
-            JSGNull('null')
 
-    def test_empty_type(self):
-        """ Make sure that Empty is a class only thingie """
-        self.assertTrue(Empty is Empty())
+def test_incompatible_pattern():
+    class INCOMPAT(Integer):
+        pattern = JSGPattern(r'[a-z]+')
 
-if __name__ == '__main__':
-    unittest.main()
+    with pytest.raises(ValueError):
+        INCOMPAT("a")
+
+    with pytest.raises(ValueError):
+        INCOMPAT(17)
+
+
+def test_null():
+    assert JSGNull(None).val is None
+    assert JSGNull(JSGNull).val is None
+    with pytest.raises(ValueError):
+        JSGNull(Empty)
+    with pytest.raises(ValueError):
+        JSGNull('null')
+
+
+def test_empty_type():
+    """ Make sure that Empty is a class only thingie """
+    assert Empty is Empty()
+
