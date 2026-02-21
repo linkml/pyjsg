@@ -6,6 +6,10 @@ from pyjsg.parser_impl.jsg_arrayexpr_parser import JSGArrayExpr
 from pyjsg.parser_impl.jsg_builtinvaluetype_parser import JSGBuiltinValueType
 from pyjsg.parser_impl.jsg_doc_context import JSGDocContext, PythonGeneratorElement
 from pyjsg.parser_impl.parser_utils import as_token, flatten_unique
+import sys
+
+version = sys.version_info
+BELOW_314 = True if version < (3, 14) else False
 
 
 class JSGValueType(jsgParserVisitor, PythonGeneratorElement):
@@ -69,8 +73,17 @@ class JSGValueType(jsgParserVisitor, PythonGeneratorElement):
             types += [e.python_type() for e in self._alttypelist]
         if self._arrayDef:
             types.append(self._arrayDef.python_type())
-        return "jsg.AnyType" if len(types) == 0 else \
-            types[0] if len(types) == 1 else "typing.Union[{}]".format(', '.join(types))
+        if BELOW_314:
+            return "jsg.AnyType" if len(types) == 0 else \
+                types[0] if len(types) == 1 else "typing.Union[{}]".format(', '.join(types))
+        else:
+            if len(types) == 0:
+                return "jsg.AnyType"
+            if len(set(types)) == 1:
+                return types[0]
+            # We do this just to ensure an order for easier testing.
+            types = set(types)
+            return " | ".join(sorted(list(types)))
 
     def signature_type(self) -> str:
         """ Return the signature type for the value. As an example, an '@int' maps to 'Integer' or a match pattern

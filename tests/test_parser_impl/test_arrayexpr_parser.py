@@ -13,7 +13,7 @@ def test_basics():
     t = cast(JSGArrayExpr, parse("id [@string] ", "arrayDef", JSGArrayExpr))
     check(t,
           ('arrayExpr: [valueType: builtinValueType: @string]',
-           'typing.List[str]',
+           'list[str]',
             [],
             "jsg.ArrayFactory('{name}', _CONTEXT, jsg.String, 0, None)",
             'None',
@@ -22,7 +22,7 @@ def test_basics():
     t = cast(JSGArrayExpr, parse("id [@int] ", "arrayDef", JSGArrayExpr))
     check(t,
           ('arrayExpr: [valueType: builtinValueType: @int]',
-           'typing.List[int]',
+           'list[int]',
            [],
            "jsg.ArrayFactory('{name}', _CONTEXT, jsg.Integer, 0, None)",
            'None',
@@ -32,7 +32,7 @@ def test_basics():
     t = cast(JSGArrayExpr, parse("id [.] ", "arrayDef", JSGArrayExpr))
     check(t,
           ('arrayExpr: [valueType: builtinValueType: jsg.AnyType]',
-           'typing.List[object]',
+           'list[object]',
            [],
            "jsg.ArrayFactory('{name}', _CONTEXT, jsg.AnyTypeFactory('{name}', _CONTEXT), 0, None)",
            'None',
@@ -42,7 +42,7 @@ def test_basics():
     t = cast(JSGArrayExpr, parse("id [(Aa|BB|'foo')] ", "arrayDef", JSGArrayExpr))
     check(t,
           ("arrayExpr: [valueType: ((STRING: pattern: r'foo') | Undefined(Aa) | BB)]",
-           'typing.List[typing.Union[str, Undefined(Aa), str]]',
+           'list[typing.Union[str, Undefined(Aa), str]]',
            ['_Anon1', 'Aa', 'BB'],
            "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[_Anon1, Undefined(Aa), BB], 0, None)",
            'None',
@@ -52,7 +52,7 @@ def test_basics():
     t = cast(JSGArrayExpr, parse("id [(Aa|BB|'foo'){0,}] ", "arrayDef", JSGArrayExpr))
     check(t,
           ("arrayExpr: [valueType: ((STRING: pattern: r'foo') | Undefined(Aa) | BB){0,}]",
-            'typing.List[typing.Union[str, Undefined(Aa), str]]',
+            'list[typing.Union[str, Undefined(Aa), str]]',
            ['_Anon1', 'Aa', 'BB'],
            "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[_Anon1, Undefined(Aa), BB], 0, None)",
            'None',
@@ -65,7 +65,7 @@ def test_options():
     t = cast(JSGArrayExpr, parse(txt, "arrayDef", JSGArrayExpr))
     check(t,
                ('arrayExpr: [valueType: (Undefined(objectValue) | Undefined(LanguageStem))+]',
-                'typing.List[typing.Union[Undefined(objectValue), Undefined(LanguageStem)]]',
+                'list[typing.Union[Undefined(objectValue), Undefined(LanguageStem)]]',
                 ['objectValue', 'LanguageStem'],
                 "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[Undefined(objectValue), Undefined(LanguageStem)], 1, None)",
                 'None',
@@ -79,7 +79,7 @@ def test_multi_types():
     check(t,
                ('arrayExpr: [(valueType: ID: objectValue | valueType: ID: '
                 'languageStem){3,7}]',
-                'typing.List[typing.Union[Undefined(objectValue), Undefined(languageStem)]]',
+                'list[typing.Union[Undefined(objectValue), Undefined(languageStem)]]',
                 ['objectValue', 'languageStem'],
                 "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[Undefined(objectValue), Undefined(languageStem)], 3, 7)",
                 'None',

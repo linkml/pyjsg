@@ -11,10 +11,10 @@ from tests.test_basics.parser import parse
 class DataTestEntry:
     text: str
     name: str
-    deps: List[str]
-    sigs: List[str]
-    membs: List[Tuple[str, str]]
-    inits: List[str]
+    deps: list[str]
+    sigs: list[str]
+    membs: list[Tuple[str, str]]
+    inits: list[str]
 
     @staticmethod
     def gen_entry(t: JSGObjectExpr, text: Optional[str] = None) -> str:
@@ -32,8 +32,8 @@ i4 = DataTestEntry(text='a {b: .? c: . d: .* e: .+ f: a}',
                name='objectExpr: simple object',
                deps=['a'],
                sigs=['b: typing.Optional[object] = jsg.Empty', 'c: object = jsg.Empty',
-                     'd: typing.List[object] = None',
-                     'e: typing.List[object] = None', 'f: a = None'],
+                     'd: list[object] = None',
+                     'e: list[object] = None', 'f: a = None'],
                membs=[('b', "typing.Optional[jsg.AnyTypeFactory('b', _CONTEXT)]"),
                       ('c', "jsg.AnyTypeFactory('c', _CONTEXT)"),
                       ('d', "jsg.ArrayFactory('d', _CONTEXT, jsg.AnyTypeFactory('d', _CONTEXT), 0, None)"),
@@ -82,8 +82,8 @@ o4 = DataTestEntry(text='{b: .? c: . d: .* e: .+ f: a}',
                name='objectExpr: simple object',
                deps=['a'],
                sigs=['b: typing.Optional[object] = jsg.Empty', 'c: object = jsg.Empty',
-                     'd: typing.List[object] = None',
-                     'e: typing.List[object] = None', 'f: Undefined(a) = None'],
+                     'd: list[object] = None',
+                     'e: list[object] = None', 'f: Undefined(a) = None'],
                membs=[('b', "typing.Optional[jsg.AnyTypeFactory('b', _CONTEXT)]"),
                       ('c', "jsg.AnyTypeFactory('c', _CONTEXT)"),
                       ('d', "jsg.ArrayFactory('d', _CONTEXT, jsg.AnyTypeFactory('d', _CONTEXT), 0, None)"),
@@ -122,7 +122,7 @@ o7 = DataTestEntry(text='{b: .? c: . | d: .*, e: .+ | f: a, }',
                       '    else:',
                       '        raise ValueError(f"Unrecognized value type: {opts_}")'])
 
-test_entries: List[Tuple[str, DataTestEntry, DataTestEntry]] = [
+test_entries: list[Tuple[str, DataTestEntry, DataTestEntry]] = [
     ('{}', i0, o0),
     ('{,}', i1, o1),
     ('{a: @int}', i2, o2),

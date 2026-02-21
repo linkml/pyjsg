@@ -15,7 +15,7 @@ class l(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 e: typing.List[str] = None,
+                 e: list[str] = None,
                  **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.e = e

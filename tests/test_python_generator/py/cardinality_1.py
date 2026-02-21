@@ -26,14 +26,14 @@ class doc(jsg.JSGObject):
     def __init__(self,
                  opt: typing.Optional[object] = jsg.Empty,
                  req: object = jsg.Empty,
-                 l0n: typing.List[object] = None,
-                 l1n: typing.List[object] = None,
-                 l01: typing.List[object] = None,
-                 l11: typing.List[object] = None,
-                 l0na: typing.List[object] = None,
-                 l1na: typing.List[object] = None,
-                 optl0n: typing.Optional[typing.List[object]] = None,
-                 optl1n: typing.Optional[typing.List[object]] = None,
+                 l0n: list[object] = None,
+                 l1n: list[object] = None,
+                 l01: list[object] = None,
+                 l11: list[object] = None,
+                 l0na: list[object] = None,
+                 l1na: list[object] = None,
+                 optl0n: typing.Optional[list[object]] = None,
+                 optl1n: typing.Optional[list[object]] = None,
                  **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.opt = opt

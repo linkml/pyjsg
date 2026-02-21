@@ -21,7 +21,7 @@ class shapeExprLabel(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -36,8 +36,8 @@ class labeledShapeOr(jsg.JSGObject):
     def __init__(self,
                  type: str = None,
                  id: shapeExprLabel = None,
-                 shapeExprs: typing.List[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapeExprs: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.type = type
         self.id = id

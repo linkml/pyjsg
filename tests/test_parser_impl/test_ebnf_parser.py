@@ -20,17 +20,17 @@ class testentry:
     stype: str
 
 
-tests = [testentry('*', 0, None, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 0, None)"),
+tests = [testentry('*', 0, None, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 0, None)"),
          testentry('?', 0, 1, "typing.Optional[k]", True, False, "typing.Optional[k]"),
-         testentry('+', 1, None, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 1, None)"),
+         testentry('+', 1, None, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 1, None)"),
          testentry('{0}', 0, 0, "type(None)", False, False, "type(None)"),
          testentry('{0, 1}', 0, 1, "typing.Optional[k]", True, False, "typing.Optional[k]"),
          testentry('{1}', 1, 1, "k", False, False, "k"),
-         testentry('{1, }', 1, None, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 1, None)"),
-         testentry('{2}', 2, 2, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 2, 2)"),
-         testentry('{2 ,}', 2, None, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 2, None)"),
-         testentry('{ 3 , * }', 3, None, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 3, None)"),
-         testentry('{3,7}', 3, 7, "typing.List[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 3, 7)")]
+         testentry('{1, }', 1, None, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 1, None)"),
+         testentry('{2}', 2, 2, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 2, 2)"),
+         testentry('{2 ,}', 2, None, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 2, None)"),
+         testentry('{ 3 , * }', 3, None, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 3, None)"),
+         testentry('{3,7}', 3, 7, "list[k]", False, True, "jsg.ArrayFactory('{name}', _CONTEXT, k, 3, 7)")]
 
 
 @pytest.mark.parametrize("te", tests, ids=[te.text for te in tests])
@@ -56,5 +56,5 @@ def test_all_optional():
     assert 'typing.Optional[k]' == t.python_cardinality('k', True)
     assert "typing.Optional[k]" == t.signature_cardinality('k', True)
     t = cast(JSGEbnf, parse('+', 'ebnfSuffix', JSGEbnf))
-    assert 'typing.Optional[typing.List[k]]' == t.python_cardinality('k', True)
+    assert 'typing.Optional[list[k]]' == t.python_cardinality('k', True)
     assert "typing.Optional[jsg.ArrayFactory('{name}', _CONTEXT, k, 1, None)]" == t.signature_cardinality('k', True)

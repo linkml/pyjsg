@@ -2,7 +2,10 @@ from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor
 from pyjsg.parser_impl.jsg_doc_context import JSGDocContext, PythonGeneratorElement
 from pyjsg.parser_impl.parser_utils import flatten_unique
+import sys
 
+version = sys.version_info
+BELOW_314 = True if version < (3, 14) else False
 
 class JSGArrayExpr(jsgParserVisitor, PythonGeneratorElement):
     def __init__(self, context: JSGDocContext, ctx: jsgParser.ArrayExprContext | None = None):
@@ -27,15 +30,21 @@ class JSGArrayExpr(jsgParserVisitor, PythonGeneratorElement):
         return f"arrayExpr: [{type_list}{self._ebnf}]"
 
     def python_type(self) -> str:
-        type_list = ', '.join([t.python_type() for t in self._types])
-        if len(self._types) > 1:
-            type_list = f'typing.Union[{type_list}]'
-        return f"typing.List[{type_list}]"
+        if BELOW_314:
+            type_list = ', '.join([t.python_type() for t in self._types])
+            if len(self._types) > 1:
+                type_list = f'typing.Union[{type_list}]'
+        else:
+            type_list = ' | '.join(sorted([t.python_type() for t in self._types]))
+        return f"list[{type_list}]"
 
     def _inner_signature(self) -> str:
-        type_list = ', '.join([t.signature_type() for t in self._types])
-        if len(self._types) > 1:
-            type_list = f'typing.Union[{type_list}]'
+        if BELOW_314:
+            type_list = ', '.join([t.signature_type() for t in self._types])
+            if len(self._types) > 1:
+                type_list = f'typing.Union[{type_list}]'
+        else:
+            type_list = ' | '.join(sorted([t.signature_type() for t in self._types]))
         return type_list
 
     def signature_type(self) -> str:

@@ -19,7 +19,7 @@ class Wildcard(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -35,7 +35,7 @@ class ObjectLiteral(jsg.JSGObject):
                  value: str = None,
                  language: typing.Optional[str] = None,
                  type: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.value = value
         self.language = language
@@ -53,7 +53,7 @@ class Stem(jsg.JSGObject):
 
     def __init__(self,
                  stem: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
 
@@ -67,8 +67,8 @@ class StemRange(jsg.JSGObject):
 
     def __init__(self,
                  stem: typing.Union[str, Wildcard] = None,
-                 exclusions: typing.Optional[typing.List[typing.Union[typing.Union[str, ObjectLiteral], Stem]]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 exclusions: typing.Optional[list[typing.Union[typing.Union[str, ObjectLiteral], Stem]]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
         self.exclusions = exclusions

@@ -97,7 +97,7 @@ def test_array():
     assert str(t) == 'valueType: arrayExpr: [valueType: builtinValueType: jsg.AnyType]'
     assert t.dependency_list() == []
     assert t.members_entries() == []
-    assert t.python_type() == 'typing.List[object]'
+    assert t.python_type() == 'list[object]'
     assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, jsg.AnyTypeFactory('{name}', _CONTEXT), 0, None)"
     assert t.mt_value() == 'None'
 
@@ -106,7 +106,7 @@ def test_array():
                       "@int | valueType: STRING: pattern: r'AB\\*')+]")
     assert t.dependency_list() == ['_Anon1']
     assert t.members_entries() == []
-    assert t.python_type() == 'typing.List[typing.Union[int, str]]'
+    assert t.python_type() == 'list[typing.Union[int, str]]'
     assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[jsg.Integer, _Anon1], 1, None)"
     assert t.mt_value() == 'None'
 

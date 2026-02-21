@@ -22,7 +22,7 @@ class ShapeExternal(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -33,7 +33,7 @@ class NodeConstraint(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -44,7 +44,7 @@ class Shape(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -63,7 +63,7 @@ class labeledShapeNot(jsg.JSGObject):
                  type: str = None,
                  id: str = None,
                  shapeExpr: typing.Union["ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, Shape, str, ShapeExternal] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.type = type
         self.id = id
@@ -83,8 +83,8 @@ class ShapeOr(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 shapeExprs: typing.List[typing.Union["ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, Shape, str, ShapeExternal]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapeExprs: list[typing.Union["ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, Shape, str, ShapeExternal]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.shapeExprs = shapeExprs
 
@@ -96,8 +96,8 @@ class ShapeAnd(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 shapeExprs: typing.List[typing.Union[ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, Shape, str, ShapeExternal]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapeExprs: list[typing.Union[ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, Shape, str, ShapeExternal]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.shapeExprs = shapeExprs
 
@@ -110,7 +110,7 @@ class ShapeNot(jsg.JSGObject):
 
     def __init__(self,
                  shapeExpr: typing.Union[ShapeOr, ShapeAnd, "ShapeNot", NodeConstraint, Shape, str, ShapeExternal] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.shapeExpr = shapeExpr
 

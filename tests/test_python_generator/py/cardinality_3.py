@@ -15,7 +15,7 @@ class doc(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 l0nl0n: typing.List[typing.List[object]] = None,
+                 l0nl0n: list[list[object]] = None,
                  **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.l0nl0n = l0nl0n

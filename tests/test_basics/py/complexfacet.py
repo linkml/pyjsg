@@ -49,7 +49,7 @@ class optFacet(jsg.JSGObject):
                  minexclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxinclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxexclusive: typing.Optional[typing.Union[str, str, str]] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -71,7 +71,7 @@ class reqFacet(jsg.JSGObject):
                  minexclusive: typing.Union[str, str, str] = None,
                  maxinclusive: typing.Union[str, str, str] = None,
                  maxexclusive: typing.Union[str, str, str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -89,11 +89,11 @@ class listFacet(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 mininclusive: typing.List[typing.Union[str, str, str]] = None,
-                 minexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxinclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 mininclusive: list[typing.Union[str, str, str]] = None,
+                 minexclusive: list[typing.Union[str, str, str]] = None,
+                 maxinclusive: list[typing.Union[str, str, str]] = None,
+                 maxexclusive: list[typing.Union[str, str, str]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -118,8 +118,8 @@ class optOpt(jsg.JSGObject):
                  minexclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxinclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxexclusive: typing.Optional[typing.Union[str, str, str]] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -147,7 +147,7 @@ class optReq(jsg.JSGObject):
                  maxinclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxexclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  last: str = None,
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -169,13 +169,13 @@ class optList(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 first: typing.List[str] = None,
+                 first: list[str] = None,
                  mininclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  minexclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxinclusive: typing.Optional[typing.Union[str, str, str]] = None,
                  maxexclusive: typing.Optional[typing.Union[str, str, str]] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -202,8 +202,8 @@ class reqOpt(jsg.JSGObject):
                  minexclusive: typing.Union[str, str, str] = None,
                  maxinclusive: typing.Union[str, str, str] = None,
                  maxexclusive: typing.Union[str, str, str] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -231,7 +231,7 @@ class reqReq(jsg.JSGObject):
                  maxinclusive: typing.Union[str, str, str] = None,
                  maxexclusive: typing.Union[str, str, str] = None,
                  last: str = None,
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -253,13 +253,13 @@ class reqList(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 first: typing.List[str] = None,
+                 first: list[str] = None,
                  mininclusive: typing.Union[str, str, str] = None,
                  minexclusive: typing.Union[str, str, str] = None,
                  maxinclusive: typing.Union[str, str, str] = None,
                  maxexclusive: typing.Union[str, str, str] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -282,12 +282,12 @@ class listOpt(jsg.JSGObject):
 
     def __init__(self,
                  first: typing.Optional[str] = None,
-                 mininclusive: typing.List[typing.Union[str, str, str]] = None,
-                 minexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxinclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 mininclusive: list[typing.Union[str, str, str]] = None,
+                 minexclusive: list[typing.Union[str, str, str]] = None,
+                 maxinclusive: list[typing.Union[str, str, str]] = None,
+                 maxexclusive: list[typing.Union[str, str, str]] = None,
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -310,12 +310,12 @@ class listReq(jsg.JSGObject):
 
     def __init__(self,
                  first: int = None,
-                 mininclusive: typing.List[typing.Union[str, str, str]] = None,
-                 minexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxinclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxexclusive: typing.List[typing.Union[str, str, str]] = None,
+                 mininclusive: list[typing.Union[str, str, str]] = None,
+                 minexclusive: list[typing.Union[str, str, str]] = None,
+                 maxinclusive: list[typing.Union[str, str, str]] = None,
+                 maxexclusive: list[typing.Union[str, str, str]] = None,
                  last: str = None,
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive
@@ -337,13 +337,13 @@ class listList(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 first: typing.List[str] = None,
-                 mininclusive: typing.List[typing.Union[str, str, str]] = None,
-                 minexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxinclusive: typing.List[typing.Union[str, str, str]] = None,
-                 maxexclusive: typing.List[typing.Union[str, str, str]] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.dict[str, object]):
+                 first: list[str] = None,
+                 mininclusive: list[typing.Union[str, str, str]] = None,
+                 minexclusive: list[typing.Union[str, str, str]] = None,
+                 maxinclusive: list[typing.Union[str, str, str]] = None,
+                 maxexclusive: list[typing.Union[str, str, str]] = None,
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.mininclusive = mininclusive

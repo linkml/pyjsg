@@ -30,7 +30,7 @@ class EachOf(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -41,7 +41,7 @@ class TripleConstraint(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -62,10 +62,10 @@ class OneOf(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 expressions: typing.List[typing.Union[EachOf, "OneOf", typing.Union[str, str]]] = None,
+                 expressions: list[typing.Union[EachOf, "OneOf", typing.Union[str, str]]] = None,
                  min: typing.Optional[str] = None,
                  max: typing.Optional[typing.Union[str, str]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.expressions = expressions

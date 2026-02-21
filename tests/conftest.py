@@ -9,6 +9,10 @@ from typing import cast, TextIO, Any
 from pyjsg.validate_json import JSGPython
 from pyjsg.jsglib.loader import loads, Logger, is_valid
 from pyjsg.parser_impl.generate_python import parse
+import sys
+
+version = sys.version_info
+BELOW_314 = True if version < (3, 14) else False
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 

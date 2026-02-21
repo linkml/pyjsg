@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from typing import Optional
 
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor

@@ -9,18 +9,18 @@ tests = [("x1 : INT", "INT", "str", ["INT"], ['x1: str = None'], [('x1', 'INT')]
           "pairDef: x1 : valueType: LEXER_ID_REF: INT"),
          ("x2 : INT?", "typing.Optional[INT]", "typing.Optional[str]", ["INT"], ['x2: typing.Optional[str] = None'], [
              ('x2', 'typing.Optional[INT]')], "pairDef: x2 : valueType: LEXER_ID_REF: INT?"),
-         ("x3 : INT+", "jsg.ArrayFactory('{name}', _CONTEXT, INT, 1, None)", "typing.List[str]", ["INT"],
-          ['x3: typing.List[str] = None'], [('x3', "jsg.ArrayFactory('x3', _CONTEXT, INT, 1, None)")],
+         ("x3 : INT+", "jsg.ArrayFactory('{name}', _CONTEXT, INT, 1, None)", "list[str]", ["INT"],
+          ['x3: list[str] = None'], [('x3', "jsg.ArrayFactory('x3', _CONTEXT, INT, 1, None)")],
           "pairDef: x3 : valueType: LEXER_ID_REF: INT+"),
-         ("x4 : INT*", "jsg.ArrayFactory('{name}', _CONTEXT, INT, 0, None)", "typing.List[str]",
-          ["INT"], ['x4: typing.List[str] = None'], [("x4", "jsg.ArrayFactory('x4', _CONTEXT, INT, 0, None)")],
+         ("x4 : INT*", "jsg.ArrayFactory('{name}', _CONTEXT, INT, 0, None)", "list[str]",
+          ["INT"], ['x4: list[str] = None'], [("x4", "jsg.ArrayFactory('x4', _CONTEXT, INT, 0, None)")],
           "pairDef: x4 : valueType: LEXER_ID_REF: INT*"),
          ("x5 : INT{1}", "INT", "str", ["INT"], ['x5: str = None'], [("x5", "INT")],
           "pairDef: x5 : valueType: LEXER_ID_REF: INT{1}"),
          ("x6 : INT{1, 1}", "INT", "str", ["INT"], ['x6: str = None'], [("x6", "INT")],
           "pairDef: x6 : valueType: LEXER_ID_REF: INT{1,1}"),
          ("x7 : INT{1,}", "jsg.ArrayFactory('{name}', _CONTEXT, INT, 1, None)",
-          "typing.List[str]", ["INT"], ['x7: typing.List[str] = None'],
+          "list[str]", ["INT"], ['x7: list[str] = None'],
           [("x7", "jsg.ArrayFactory('x7', _CONTEXT, INT, 1, None)")],
           "pairDef: x7 : valueType: LEXER_ID_REF: INT{1,}")]
 
@@ -74,7 +74,7 @@ def test_odd_identifiers():
 def test_pairdef_shorthand():
     text = "(x1 'v 2' 'class') : @number {3,17}"
     t = cast(JSGPairDef, parse(text, "pairDef", JSGPairDef))
-    assert t.signatures() == ['x1: typing.List[float] = None', 'class_: typing.List[float] = None']
+    assert t.signatures() == ['x1: list[float] = None', 'class_: list[float] = None']
     assert t.initializers() == [
         'self.x1 = x1',
         "setattr(self, 'v 2', _kwargs.get('v 2', None))",
@@ -139,7 +139,7 @@ b {Patient*}
     assert d is not None
     t = d._context.reference('b')
     assert str(t) == 'objectExpr: simple object'
-    assert t.signatures() == ['name: typing.List[str] = None', 'age: int = None']
+    assert t.signatures() == ['name: list[str] = None', 'age: int = None']
     assert t.initializers() == ['self.name = name', 'self.age = age']
     assert t.dependency_list() == ['Patient']
     assert t.members_entries() == [

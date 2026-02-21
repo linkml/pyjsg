@@ -1,3 +1,6 @@
+from pyjsg.parser_impl.jsg_arrayexpr_parser import BELOW_314
+
+
 def test_macro1(do_python_generator_test):
     import tests.test_python_generator.py.macrotest_1 as doc
 
@@ -10,7 +13,10 @@ def test_macro1(do_python_generator_test):
         '{"id": 12.2}',
         '{"id": 17, "j": 1}'
     ]
-    do_python_generator_test(jsg, 'macrotest_1', doc, test_cases, {}, fail_cases)
+    if not BELOW_314:
+        do_python_generator_test(jsg, 'macrotest_1_314', doc, test_cases, {}, fail_cases)
+    else:
+        do_python_generator_test(jsg, 'macrotest_1', doc, test_cases, {}, fail_cases)
 
 
 def test_macro2(do_python_generator_test):
@@ -27,12 +33,14 @@ Shape            {id:shapeExprLabel?}
         '{"id": 12.2}',
         '{"id": 17, "j": 1}'
     ]
-    do_python_generator_test(jsg2, 'macrotest_2', doc2, test_cases, {}, fail_cases)
+    if not BELOW_314:
+        do_python_generator_test(jsg2, 'macrotest_2_314', doc2, test_cases, {}, fail_cases)
+    else:
+        do_python_generator_test(jsg2, 'macrotest_2', doc2, test_cases, {}, fail_cases)
 
 
 def test_macro3(do_python_generator_test):
     import tests.test_python_generator.py.macrotest_3 as doc3
-    testfile = "macrotest_3"
 
     jsg3 = """
 shapeExprLabel   = IRIREF|BNODE ;
@@ -50,4 +58,7 @@ BNODE            : '_:' [A-Z]+ ;\
         '{"id": "aaa"}',
         '{"id": "AAA", "j": 1}'
     ]
-    do_python_generator_test(jsg3, testfile, doc3, test_cases, {}, fail_cases, print_python=False)
+    if not BELOW_314:
+        do_python_generator_test(jsg3, "macrotest_3_314", doc3, test_cases, {}, fail_cases, print_python=False)
+    else:
+        do_python_generator_test(jsg3, "macrotest_3", doc3, test_cases, {}, fail_cases, print_python=False)

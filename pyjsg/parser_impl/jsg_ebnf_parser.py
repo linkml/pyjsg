@@ -41,7 +41,7 @@ class JSGEbnf(jsgParserVisitor):
         :return: Typed subject
         """
         if self.multiple_elements:
-            rval = f"typing.List[{subject}]"
+            rval = f"list[{subject}]"
         elif self.one_optional_element:
             rval = subject if subject.startswith("typing.Optional[") else f"typing.Optional[{subject}]"
         elif self.max == 0:
@@ -53,7 +53,7 @@ class JSGEbnf(jsgParserVisitor):
         return rval
 
     def signature_cardinality(self, subject: str, all_are_optional: bool = False) -> str:
-        """Add the appropriate python typing to subject (e.g. Optional, List, ...)
+        """Add the appropriate python typing to subject (e.g. Optional, list, ...)
 
         :param subject: Subject to be decorated
         :param all_are_optional: Force everything to be optional

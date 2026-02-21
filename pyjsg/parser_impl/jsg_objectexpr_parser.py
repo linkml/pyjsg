@@ -29,7 +29,7 @@ class {name}(jsg.JSGObjectMap):{name_filter}{value_type}
 
 
 _init_template = """    def __init__(self{signatures},
-                 **_kwargs: typing.dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs){initializers}
 """
 indent0 = ",\n                "

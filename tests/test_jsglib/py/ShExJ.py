@@ -62,7 +62,7 @@ class InnerContext(jsg.JSGObject):
     _strict = False
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -78,7 +78,7 @@ class stringFacet_1_(jsg.JSGObject):
                  length: int = None,
                  minlength: int = None,
                  maxlength: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.length = length
         self.minlength = minlength
@@ -95,7 +95,7 @@ class stringFacet_2_(jsg.JSGObject):
     def __init__(self,
                  pattern: str = None,
                  flags: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.pattern = pattern
         self.flags = flags
@@ -119,7 +119,7 @@ class numericFacet(jsg.JSGObject):
                  maxexclusive: float = None,
                  totaldigits: int = None,
                  fractiondigits: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -137,7 +137,7 @@ class LiteralStem(jsg.JSGObject):
 
     def __init__(self,
                  stem: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
 
@@ -150,7 +150,7 @@ class LanguageStem(jsg.JSGObject):
 
     def __init__(self,
                  stem: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
 
@@ -162,7 +162,7 @@ class Wildcard(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -184,7 +184,7 @@ class xsFacet_2_(jsg.JSGObject):
                  maxexclusive: float = None,
                  totaldigits: int = None,
                  fractiondigits: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -206,7 +206,7 @@ class stringFacet(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[stringFacet_1_, stringFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, stringFacet_1_):
@@ -229,8 +229,8 @@ class LiteralStemRange(jsg.JSGObject):
 
     def __init__(self,
                  stem: typing.Union[str, Wildcard] = None,
-                 exclusions: typing.List[typing.Union[str, LiteralStem]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 exclusions: list[typing.Union[str, LiteralStem]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
         self.exclusions = exclusions
@@ -244,7 +244,7 @@ class Language(jsg.JSGObject):
 
     def __init__(self,
                  languageTag: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.languageTag = languageTag
 
@@ -258,8 +258,8 @@ class LanguageStemRange(jsg.JSGObject):
 
     def __init__(self,
                  stem: typing.Union[str, Wildcard] = None,
-                 exclusions: typing.List[typing.Union[str, LanguageStem]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 exclusions: list[typing.Union[str, LanguageStem]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
         self.exclusions = exclusions
@@ -277,7 +277,7 @@ class xsFacet_1_(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[stringFacet_1_, stringFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, stringFacet_1_):
@@ -309,7 +309,7 @@ class xsFacet(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[xsFacet_1_, xsFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, xsFacet_1_):
@@ -346,7 +346,7 @@ class ObjectLiteral(jsg.JSGObject):
                  value: str = None,
                  language: typing.Optional[str] = None,
                  type: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.value = value
         self.language = language
@@ -361,7 +361,7 @@ class IriStem(jsg.JSGObject):
 
     def __init__(self,
                  stem: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
 
@@ -376,7 +376,7 @@ class SemAct(jsg.JSGObject):
     def __init__(self,
                  name: str = None,
                  code: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.name = name
         self.code = code
@@ -397,8 +397,8 @@ class IriStemRange(jsg.JSGObject):
 
     def __init__(self,
                  stem: typing.Union[str, Wildcard] = None,
-                 exclusions: typing.List[typing.Union[str, IriStem]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 exclusions: list[typing.Union[str, IriStem]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.stem = stem
         self.exclusions = exclusions
@@ -415,7 +415,7 @@ class ShapeExternal(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -433,7 +433,7 @@ class Annotation(jsg.JSGObject):
     def __init__(self,
                  predicate: str = None,
                  object: typing.Union[str, ObjectLiteral] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.predicate = predicate
         self.object = object
@@ -464,8 +464,8 @@ class NodeConstraint(jsg.JSGObject):
                  nodeKind: typing.Optional[str] = None,
                  datatype: typing.Optional[str] = None,
                  opts_: typing.Union[xsFacet_1_, xsFacet_2_] = None,
-                 values: typing.Optional[typing.List[typing.Union[typing.Union[str, ObjectLiteral], IriStem, IriStemRange, LiteralStem, LiteralStemRange, Language, LanguageStem, LanguageStemRange]]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 values: typing.Optional[list[typing.Union[typing.Union[str, ObjectLiteral], IriStem, IriStemRange, LiteralStem, LiteralStemRange, Language, LanguageStem, LanguageStemRange]]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.nodeKind = nodeKind
@@ -505,11 +505,11 @@ class Schema(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 imports: typing.Optional[typing.List[str]] = None,
-                 startActs: typing.Optional[typing.List[SemAct]] = None,
+                 imports: typing.Optional[list[str]] = None,
+                 startActs: typing.Optional[list[SemAct]] = None,
                  start: typing.Optional[typing.Union["ShapeDecl", "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]] = None,
-                 shapes: typing.Optional[typing.List[typing.Union["ShapeDecl", "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapes: typing.Optional[list[typing.Union["ShapeDecl", "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         setattr(self, '@context', _kwargs.get('@context', None))
         self.imports = imports
@@ -530,9 +530,9 @@ class ShapeDecl(jsg.JSGObject):
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
                  abstract: typing.Optional[bool] = None,
-                 restricts: typing.Optional[typing.List[typing.Union[str, str]]] = None,
+                 restricts: typing.Optional[list[typing.Union[str, str]]] = None,
                  shapeExpr: typing.Union["ShapeDecl", "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.abstract = abstract
@@ -549,8 +549,8 @@ class ShapeOr(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 shapeExprs: typing.List[typing.Union[ShapeDecl, "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapeExprs: list[typing.Union[ShapeDecl, "ShapeOr", "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.shapeExprs = shapeExprs
@@ -565,8 +565,8 @@ class ShapeAnd(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 shapeExprs: typing.List[typing.Union[ShapeDecl, ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 shapeExprs: list[typing.Union[ShapeDecl, ShapeOr, "ShapeAnd", "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.shapeExprs = shapeExprs
@@ -582,7 +582,7 @@ class ShapeNot(jsg.JSGObject):
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
                  shapeExpr: typing.Union[ShapeDecl, ShapeOr, ShapeAnd, "ShapeNot", NodeConstraint, "Shape", typing.Union[str, str], ShapeExternal] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.shapeExpr = shapeExpr
@@ -602,13 +602,13 @@ class Shape(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 extends: typing.Optional[typing.List[typing.Union[str, str]]] = None,
+                 extends: typing.Optional[list[typing.Union[str, str]]] = None,
                  closed: typing.Optional[bool] = None,
-                 extra: typing.Optional[typing.List[str]] = None,
+                 extra: typing.Optional[list[str]] = None,
                  expression: typing.Optional[typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[str, str]]] = None,
-                 semActs: typing.Optional[typing.List[SemAct]] = None,
-                 annotations: typing.Optional[typing.List[Annotation]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 semActs: typing.Optional[list[SemAct]] = None,
+                 annotations: typing.Optional[list[Annotation]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.extends = extends
@@ -635,12 +635,12 @@ class EachOf(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 expressions: typing.List[typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[str, str]]] = None,
+                 expressions: list[typing.Union["EachOf", "OneOf", "TripleConstraint", typing.Union[str, str]]] = None,
                  min: typing.Optional[int] = None,
                  max: typing.Optional[int] = None,
-                 semActs: typing.Optional[typing.List[SemAct]] = None,
-                 annotations: typing.Optional[typing.List[Annotation]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 semActs: typing.Optional[list[SemAct]] = None,
+                 annotations: typing.Optional[list[Annotation]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.expressions = expressions
@@ -663,12 +663,12 @@ class OneOf(jsg.JSGObject):
 
     def __init__(self,
                  id: typing.Optional[typing.Union[str, str]] = None,
-                 expressions: typing.List[typing.Union[EachOf, "OneOf", "TripleConstraint", typing.Union[str, str]]] = None,
+                 expressions: list[typing.Union[EachOf, "OneOf", "TripleConstraint", typing.Union[str, str]]] = None,
                  min: typing.Optional[int] = None,
                  max: typing.Optional[int] = None,
-                 semActs: typing.Optional[typing.List[SemAct]] = None,
-                 annotations: typing.Optional[typing.List[Annotation]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 semActs: typing.Optional[list[SemAct]] = None,
+                 annotations: typing.Optional[list[Annotation]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.expressions = expressions
@@ -700,9 +700,9 @@ class TripleConstraint(jsg.JSGObject):
                  min: typing.Optional[int] = None,
                  max: typing.Optional[int] = None,
                  onShapeExpression: typing.Optional[typing.Union[ShapeDecl, ShapeOr, ShapeAnd, ShapeNot, NodeConstraint, Shape, typing.Union[str, str], ShapeExternal]] = None,
-                 semActs: typing.Optional[typing.List[SemAct]] = None,
-                 annotations: typing.Optional[typing.List[Annotation]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 semActs: typing.Optional[list[SemAct]] = None,
+                 annotations: typing.Optional[list[Annotation]] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
         self.inverse = inverse
