@@ -61,8 +61,43 @@ dev = [
     "yadict_compare",
     "pytest",
     "pytest-forked",
+    "coverage",
 ]
 
 [tool.black]
 line-length = 120
 target-version = ["py310", "py311", "py312", "py313",  "py314"]
+
+[tool.codespell]
+skip = [
+  ".git",
+  "uv.lock",
+  "*.toml",
+]
+
+[tool.tox]
+requires = ["tox>=4"]
+env_list = ["lint", "py{310,311,312,313}"]
+
+[tool.tox.env_run_base]
+allowlist_externals = ["uv"]
+deps = ["pytest"]
+commands = [
+  ["uv", "sync", "--all-extras", "--dev"],
+  ["uv", "run", "pytest", "{posargs}"],
+]
+
+[tool.tox.env.codespell]
+description = "Run spell checkers."
+skip_install = true
+deps = [
+  "codespell",
+  "tomli", # required for getting config from pyproject.toml
+]
+commands = [
+  ["codespell", "{posargs}"]
+]
+
+[tool.coverage.report]
+# We need to do this because when dynamically generating, there is no source code causing an error
+ignore_errors = true
