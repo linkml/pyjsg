@@ -2,7 +2,7 @@ import sys
 import typing
 from collections.abc import Iterable, Callable
 
-from typing import Union
+from typing import Union, get_origin
 # Typing_patch module for Python 3.7
 
 if sys.version_info >= (3, 7):
@@ -33,9 +33,10 @@ def proc_forward(etype, namespace: dict[str, Any]):
 
 def is_union(etype) -> bool:
     """ Determine whether etype is a Union """
-    return getattr(etype, '__origin__', None) is not None and \
-           getattr(etype.__origin__, '_name', None) and\
-           etype.__origin__._name == 'Union'
+    origin_type = get_origin(etype)
+    if origin_type:
+        return get_origin(etype).__name__ == 'Union'
+    return False
 
 
 def is_dict(etype) -> bool:
