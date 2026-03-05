@@ -1,5 +1,4 @@
 import os
-import uuid
 from argparse import ArgumentParser
 from io import StringIO
 from types import ModuleType

@@ -2,7 +2,7 @@ import sys
 import typing
 from collections.abc import Iterable, Callable
 
-from typing import Union, get_origin
+from typing import Union
 # Typing_patch module for Python 3.7
 
 if sys.version_info >= (3, 7):
@@ -12,8 +12,6 @@ if sys.version_info >= (3, 7):
 def proc_forward(etype, namespace: dict[str, Any]):
     """ Resolve etype to an actual type if it is a forward reference """
     if type(etype) is ForwardRef:
-        # TODO address deprecation warning Failing to pass a value to the 'type_params' parameter of 'typing._eval_type'
-        # for python 3.15
         return _eval_type(etype, namespace, namespace)
     # Namespace can be None, for example in the test_simple_object test.
     if namespace is not None and is_union(etype):
@@ -35,10 +33,9 @@ def proc_forward(etype, namespace: dict[str, Any]):
 
 def is_union(etype) -> bool:
     """ Determine whether etype is a Union """
-    origin_type = get_origin(etype)
-    if origin_type:
-        return get_origin(etype).__name__ == 'Union'
-    return False
+    return getattr(etype, '__origin__', None) is not None and \
+           getattr(etype.__origin__, '_name', None) and\
+           etype.__origin__._name == 'Union'
 
 
 def is_dict(etype) -> bool:
