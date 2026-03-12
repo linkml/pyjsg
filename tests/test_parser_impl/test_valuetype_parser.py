@@ -2,7 +2,7 @@ import pytest
 from typing import cast
 
 from pyjsg.parser_impl.jsg_objectexpr_parser import JSGObjectExpr
-from pyjsg.parser_impl.jsg_valuetype_parser import JSGValueType
+from pyjsg.parser_impl.jsg_valuetype_parser import JSGValueType, BELOW_314
 from tests.test_basics.parser import parse
 
 builtin_tests = [("@string", "jsg.String", "str", "None"),
@@ -77,7 +77,10 @@ def test_alternatives():
 
     t = cast(JSGValueType, parse("id = (Aa | Bb | (Cc | Dd)) ;", "valueTypeMacro", JSGValueType))
     assert t.signature_type() == "typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]"
-    assert t.python_type() == "typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]"
+    if BELOW_314:
+        assert t.python_type() == "typing.Union[Undefined(Aa), Undefined(Bb), typing.Union[Undefined(Cc), Undefined(Dd)]]"
+    else:
+        assert t.python_type() == "Undefined(Aa) | Undefined(Bb) | Undefined(Cc) | Undefined(Dd)"
     assert t.dependency_list() == ['Aa', 'Bb', 'Cc', 'Dd']
     assert str(t) == "valueType: (Undefined(Aa) | Undefined(Bb) | typing.Union[Undefined(Cc), Undefined(Dd)])"
     assert t.members_entries() == []
@@ -85,8 +88,11 @@ def test_alternatives():
     t = cast(JSGValueType, parse("id = (Aa | Bb | 'foo' | (Cc | Dd) | 'bar') ;", "valueTypeMacro", JSGValueType))
     assert t.signature_type() == ("typing.Union[_Anon1, Undefined(Aa), Undefined(Bb), "
                                    "typing.Union[Undefined(Cc), Undefined(Dd)]]")
-    assert t.python_type() == ("typing.Union[str, Undefined(Aa), Undefined(Bb), "
-                                "typing.Union[Undefined(Cc), Undefined(Dd)]]")
+    if BELOW_314:
+        assert t.python_type() == ("typing.Union[str, Undefined(Aa), Undefined(Bb), "
+                                   "typing.Union[Undefined(Cc), Undefined(Dd)]]")
+    else:
+        assert t.python_type() == "Undefined(Aa) | Undefined(Bb) | Undefined(Cc) | Undefined(Dd) | str"
     assert t.dependency_list() == ['_Anon1', 'Aa', 'Bb', 'Cc', 'Dd']
     assert str(t) == ("valueType: ((STRING: pattern: r'(foo)|(bar)') | Undefined(Aa) | Undefined(Bb) | "
                       "typing.Union[Undefined(Cc), Undefined(Dd)])")
@@ -106,8 +112,12 @@ def test_array():
                       "@int | valueType: STRING: pattern: r'AB\\*')+]")
     assert t.dependency_list() == ['_Anon1']
     assert t.members_entries() == []
-    assert t.python_type() == 'list[typing.Union[int, str]]'
-    assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[jsg.Integer, _Anon1], 1, None)"
+    if BELOW_314:
+        assert t.python_type() == 'list[typing.Union[int, str]]'
+        assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, typing.Union[jsg.Integer, _Anon1], 1, None)"
+    else:
+        assert t.python_type() == 'list[int | str]'
+        assert t.signature_type() == "jsg.ArrayFactory('{name}', _CONTEXT, _Anon1 | jsg.Integer, 1, None)"
     assert t.mt_value() == 'None'
 
 
@@ -122,7 +132,10 @@ def test_lexeridref():
     t = cast(JSGValueType, parse('("[a-z]*" | "0-9*" | ID)', "valueType", JSGValueType))
     assert str(t) == "valueType: ((STRING: pattern: r'(\\[a\\-z\\]\\*)|(0\\-9\\*)') | ID)"
     assert t.signature_type() == "typing.Union[_Anon1, ID]"
-    assert t.python_type() == "typing.Union[str, str]"
+    if BELOW_314:
+        assert t.python_type() == "typing.Union[str, str]"
+    else:
+        assert t.python_type() == "str"
     assert t.mt_value() == "None"
     assert t.members_entries() == []
 
@@ -140,7 +153,10 @@ def test_objectmacro_opts():
     t = cast(JSGValueType, parse("a = @string | KT | {} ;", "valueTypeMacro", JSGValueType))
     assert str(t) == 'valueType: (jsg.String | KT | _Anon1)'
     assert t.signature_type() == 'typing.Union[jsg.String, KT, _Anon1]'
-    assert t.python_type() == 'typing.Union[str, str, _Anon1]'
+    if BELOW_314:
+        assert t.python_type() == 'typing.Union[str, str, _Anon1]'
+    else:
+        assert t.python_type() == '_Anon1 | str'
     assert t.mt_value() == 'None'
     assert t.members_entries() == []
 
