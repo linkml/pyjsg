@@ -1,11 +1,7 @@
-import unittest
-
 from pyjsg.validate_json import JSGPython
 
 
-class GeneSeqTestCase(unittest.TestCase):
-    """ Test list of sequences in documentation """
-    def test_1(self):
+def test_gene_seq_test_1():
         x = JSGPython('''
 doc {
     sequences: [(RNASEQ|DNASEQ)]
@@ -22,8 +18,4 @@ DNASEQ: [ACGT]+ ;
     "ATTTTGCGAGGTCCC"
    ]
 }''')
-        self.assertTrue(rslt.success)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert rslt.success

@@ -19,7 +19,7 @@ class Person(jsg.JSGObject):
     def __init__(self,
                  name: str = None,
                  age: typing.Optional[int] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.name = name
         self.age = age

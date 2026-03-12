@@ -1,9 +1,5 @@
-import sys
-
-if sys.version_info < (3, 7):
-    from .typing_patch_36 import *
-else:
-    from .typing_patch_37 import *
+from .typing_patch_37 import *
+from typing import Any
 
 
 def element_conforms(element, etype) -> bool:
@@ -25,7 +21,7 @@ def element_conforms(element, etype) -> bool:
         return isinstance(element, etype)
 
 
-def conforms(element, etype, namespace: Dict[str, Any]) -> bool:
+def conforms(element, etype, namespace: dict[str, Any]) -> bool:
     """ Determine whether element conforms to etype
 
     :param element: Element to test for conformance

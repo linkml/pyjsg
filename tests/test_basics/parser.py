@@ -1,5 +1,3 @@
-from typing import Callable, Optional
-
 from antlr4 import InputStream, CommonTokenStream
 
 from pyjsg.parser.jsgLexer import jsgLexer
@@ -9,7 +7,7 @@ from pyjsg.parser_impl.generate_python import ParseErrorListener
 from pyjsg.parser_impl.jsg_doc_context import JSGDocContext
 
 
-def parse(text: str, production_rule: str, listener) -> Optional[jsgParserVisitor]:
+def parse(text: str, production_rule: str, listener) -> jsgParserVisitor | None:
     """ 
     Parse text fragment according to supplied production rule and evaluate with listener class.
     

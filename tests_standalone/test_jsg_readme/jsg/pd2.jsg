@@ -1,4 +1,0 @@
-.TYPE id - person ;
-
-person {name:@string, age:@int}
-membership {list_name:@string members:person*}

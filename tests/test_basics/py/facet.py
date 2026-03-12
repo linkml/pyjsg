@@ -40,7 +40,7 @@ class stringFacet(jsg.JSGObject):
                  maxlength: typing.Optional[str] = None,
                  pattern: str = None,
                  flags: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.length = length
         self.minlength = minlength
@@ -67,7 +67,7 @@ class numericFacet(jsg.JSGObject):
                  maxexclusive: typing.Optional[str] = None,
                  totaldigits: typing.Optional[str] = None,
                  fractiondigits: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -105,7 +105,7 @@ class xsFacet(jsg.JSGObject):
                  maxexclusive: typing.Optional[str] = None,
                  totaldigits: typing.Optional[str] = None,
                  fractiondigits: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.length = length
         self.minlength = minlength
@@ -151,8 +151,8 @@ class labeledNodeConstraint(jsg.JSGObject):
                  maxexclusive: typing.Optional[str] = None,
                  totaldigits: typing.Optional[str] = None,
                  fractiondigits: typing.Optional[str] = None,
-                 last: typing.List[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 last: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.first = first
         self.length = length

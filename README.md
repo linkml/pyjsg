@@ -1,3 +1,7 @@
+This repository was originally developed by [Harold Solbrig](https://github.com/hsolbrig) and was kindly contributed
+to the LinkML organization because of his retirement. All credit for the original development of this repository goes
+to him.
+
 # PyJSG -- JSON Schema Grammar Bindings for Python
 Translate [JSON Schema Grammar](http://github.com/ericprud/jsg) into Python objects.
 

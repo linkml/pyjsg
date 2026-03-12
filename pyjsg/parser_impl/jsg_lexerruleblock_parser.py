@@ -1,5 +1,5 @@
+from __future__ import annotations
 import re
-from typing import List, Set, Optional, Tuple
 
 from pyjsg.parser_impl.jsg_builtinvaluetype_parser import JSGBuiltinValueType
 from pyjsg.parser_impl.parser_utils import as_token
@@ -17,12 +17,12 @@ class {name}({base_type}):
 
 class JSGLexerRuleBlock(jsgParserVisitor, PythonGeneratorElement):
 
-    def __init__(self, context: JSGDocContext, ctx: Optional[jsgParser.lexerRuleBlock] = None) -> None:
+    def __init__(self, context: JSGDocContext, ctx: jsgParser.lexerRuleBlock | None = None) -> None:
         self._context = context
 
         self._rulePattern: str = ""
-        self._ruleTokens: Set[str] = set()
-        self._jsontype: Optional[JSGBuiltinValueType] = None
+        self._ruleTokens: set[str] = set()
+        self._jsontype: JSGBuiltinValueType | None = None
         self.text = ""
 
         if ctx:
@@ -32,10 +32,10 @@ class JSGLexerRuleBlock(jsgParserVisitor, PythonGeneratorElement):
     def __str__(self):
         return f"pattern: r'{self._rulePattern}'"
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         return list(self._ruleTokens)
 
-    def members_entries(self, all_are_optional: bool=False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool=False) -> list[tuple[str, str]]:
         return []
 
     def python_type(self) -> str:
@@ -112,7 +112,7 @@ class JSGLexerRuleBlock(jsgParserVisitor, PythonGeneratorElement):
     def add_string(self, pattern: str, parens: bool) -> None:
         self._rulePattern += ('(' if parens else '') + re.escape(pattern) + (')' if parens else '')
 
-    def add_strings(self, patterns: List[str]):
+    def add_strings(self, patterns: list[str]):
         self.add_string(patterns[0], len(patterns) > 1)
         for p in patterns[1:]:
             self._rulePattern += "|"

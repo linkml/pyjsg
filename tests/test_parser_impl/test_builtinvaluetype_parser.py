@@ -1,5 +1,6 @@
-import unittest
 from typing import cast
+
+import pytest
 
 from pyjsg.parser_impl.jsg_builtinvaluetype_parser import JSGBuiltinValueType
 from pyjsg.parser_impl.jsg_valuetype_parser import JSGValueType
@@ -15,17 +16,12 @@ builtin_tests = [("@string", "jsg.String", "str", "None"),
                  (".", "jsg.AnyTypeFactory('{name}', _CONTEXT)", "object", "jsg.Empty")]
 
 
-class BuiltinValueTypeTestCase(unittest.TestCase):
-    def test_builtins(self):
-        for text, sig, typ_, mt_typ in builtin_tests:
-            t = cast(JSGValueType, parse(text, "builtinValueType", JSGBuiltinValueType))
-            self.assertEqual(sig, t.signature_type(), text)
-            self.assertEqual(typ_, t.python_type(), text)
-            self.assertEqual(f"builtinValueType: {text if text != '.' else 'jsg.AnyType'}", str(t), text)
-            self.assertEqual(mt_typ, t.mt_value(), text)
-            self.assertEqual([], t.members_entries(), text)
-            self.assertEqual([], t.dependency_list(), text)
-
-
-if __name__ == '__main__':
-    unittest.main()
+@pytest.mark.parametrize("text,sig,typ_,mt_typ", builtin_tests)
+def test_builtins(text, sig, typ_, mt_typ):
+    t = cast(JSGValueType, parse(text, "builtinValueType", JSGBuiltinValueType))
+    assert t.signature_type() == sig, text
+    assert t.python_type() == typ_, text
+    assert str(t) == f"builtinValueType: {text if text != '.' else 'jsg.AnyType'}", text
+    assert t.mt_value() == mt_typ, text
+    assert t.members_entries() == [], text
+    assert t.dependency_list() == [], text

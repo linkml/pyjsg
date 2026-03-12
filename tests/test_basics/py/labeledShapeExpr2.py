@@ -29,7 +29,7 @@ class labeledShapeOr(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -42,7 +42,7 @@ class labeledShapeAnd(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -55,7 +55,7 @@ class labeledShapeNot(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -68,7 +68,7 @@ class labeledNodeConstraint(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -81,7 +81,7 @@ class labeledShape(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -94,7 +94,7 @@ class shapeExprLabel(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -107,7 +107,7 @@ class labeledShapeExternal_1_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -119,7 +119,7 @@ class labeledShapeExternal_2_(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 
@@ -131,7 +131,7 @@ class expr_1_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -144,7 +144,7 @@ class expr_2_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -157,7 +157,7 @@ class expr_3_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -170,7 +170,7 @@ class expr_4_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -183,7 +183,7 @@ class expr_5_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -196,7 +196,7 @@ class expr_6_(jsg.JSGObject):
 
     def __init__(self,
                  id: str = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 
@@ -209,7 +209,7 @@ class labeledShapeExternal(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[labeledShapeExternal_1_, labeledShapeExternal_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, labeledShapeExternal_1_):
@@ -228,7 +228,7 @@ class expr_7_(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[labeledShapeExternal_1_, labeledShapeExternal_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, labeledShapeExternal_1_):
@@ -253,7 +253,7 @@ class expr(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[expr_1_, expr_2_, expr_3_, expr_4_, expr_5_, expr_6_, expr_7_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, expr_1_):

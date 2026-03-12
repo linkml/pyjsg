@@ -1,11 +1,10 @@
 import re
-from typing import Optional
 
 default_prefix = "_Anon"
 
 
 class AnonymousIdentifierFactory:
-    def __init__(self, prefix: Optional[str] = None):
+    def __init__(self, prefix: str | None = None):
         """Create a factory
 
         :param prefix: Prefix - default_prefix if omitted

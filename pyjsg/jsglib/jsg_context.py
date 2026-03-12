@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any
 
 
 class JSGContext:
@@ -10,16 +10,16 @@ class JSGContext:
 
         # Objects that lack type identifiers.  Any objects lacking a TYPE variable will be matched against
         # the list below in order
-        self.TYPE_EXCEPTIONS: List[str] = []
+        self.TYPE_EXCEPTIONS: list[str] = []
 
         # Object pair names that can always exist in an object
-        self.IGNORE: List[str] = []
+        self.IGNORE: list[str] = []
 
         # True means that we allow JSON_LD constructs (parameters starting with "@")
         self.JSON_LD = True
 
         # NAMESPACE prevents references from being resolved against other JSG modules
-        self.NAMESPACE: Dict[str, Any] = None
+        self.NAMESPACE: dict[str, Any] = None
 
     def unvalidated_parm(self, parm: str) -> bool:
         """Return true if the pair name should be ignored

@@ -32,7 +32,7 @@ class stringFacet_1_(jsg.JSGObject):
                  length: int = None,
                  minlength: int = None,
                  maxlength: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.length = length
         self.minlength = minlength
@@ -49,7 +49,7 @@ class stringFacet_2_(jsg.JSGObject):
     def __init__(self,
                  pattern: str = None,
                  flags: typing.Optional[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.pattern = pattern
         self.flags = flags
@@ -73,7 +73,7 @@ class numericFacet(jsg.JSGObject):
                  maxexclusive: int = None,
                  totaldigits: int = None,
                  fractiondigits: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -101,7 +101,7 @@ class xsFacet_2_(jsg.JSGObject):
                  maxexclusive: int = None,
                  totaldigits: int = None,
                  fractiondigits: int = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.mininclusive = mininclusive
         self.minexclusive = minexclusive
@@ -123,7 +123,7 @@ class stringFacet(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[stringFacet_1_, stringFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, stringFacet_1_):
@@ -149,7 +149,7 @@ class xsFacet_1_(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[stringFacet_1_, stringFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, stringFacet_1_):
@@ -181,7 +181,7 @@ class xsFacet(jsg.JSGObject):
 
     def __init__(self,
                  opts_: typing.Union[xsFacet_1_, xsFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         if opts_ is not None:
             if isinstance(opts_, xsFacet_1_):
@@ -228,7 +228,7 @@ class NodeConstraint(jsg.JSGObject):
                  nodeKind: typing.Optional[str] = None,
                  datatype: typing.Optional[str] = None,
                  opts_: typing.Union[xsFacet_1_, xsFacet_2_] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.nodeKind = nodeKind
         self.datatype = datatype

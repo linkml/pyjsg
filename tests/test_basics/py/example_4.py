@@ -24,7 +24,7 @@ class doc(jsg.JSGObject):
 
     def __init__(self,
                  street: typing.Union[str, str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.street = street
 

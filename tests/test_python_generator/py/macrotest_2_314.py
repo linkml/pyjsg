@@ -9,15 +9,7 @@ _CONTEXT = jsg.JSGContext()
 _CONTEXT.TYPE_EXCEPTIONS.append("Shape")
 
 
-class IRIREF(jsg.JSGString):
-    pattern = jsg.JSGPattern(r'[A-Z]+')
-
-
-class BNODE(jsg.JSGString):
-    pattern = jsg.JSGPattern(r'_\:[A-Z]+')
-
-
-shapeExprLabel = typing.Union[IRIREF, BNODE]
+shapeExprLabel = typing.Union[jsg.Integer, jsg.String]
 
 
 class Shape(jsg.JSGObject):
@@ -26,8 +18,8 @@ class Shape(jsg.JSGObject):
     _strict = True
 
     def __init__(self,
-                 id: typing.Optional[typing.Union[str, str]] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 id: typing.Optional[int | str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.id = id
 

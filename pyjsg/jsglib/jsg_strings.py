@@ -1,5 +1,5 @@
 import re
-from typing import Optional, Any, Union, Tuple
+from typing import Any
 
 from pyjsg.jsglib.jsg_validateable import JSGValidateable
 from pyjsg.jsglib.loader import Logger
@@ -34,21 +34,21 @@ class JSGPattern:
 
 
 class JSGPatternedValMeta(type):
-    pattern: Optional[JSGPattern]
-    python_type: Union[type, Tuple[type]]
+    pattern: JSGPattern | None
+    python_type: type | tuple[type]
 
     def __instancecheck__(self, instance) -> bool:
         return isinstance(instance, self.python_type) and (self.pattern is None or self.pattern.matches(str(instance)))
 
 
 class JSGPatterned(JSGValidateable, metaclass=JSGPatternedValMeta):
-    pattern: Optional[JSGPattern] = None
+    pattern: JSGPattern | None = None
 
     def __init__(self, val: Any) -> None:
         if not isinstance(val, type(self)):
             raise ValueError(f'Invalid {self._class_name} value: "{val}"')
 
-    def _is_valid(self, log: Optional[Logger] = None) -> bool:
+    def _is_valid(self, log: Logger | None = None) -> bool:
         return True
 
     @property
@@ -60,7 +60,7 @@ class JSGString(str, JSGPatterned):
     """
     A lexerRuleSpec implementation
     """
-    pattern: Optional[JSGPattern] = None
+    pattern: JSGPattern | None = None
     python_type = str
 
 
@@ -75,7 +75,7 @@ class Number(float, JSGPatterned):
     python_type = (int, float, str)
 
     @property
-    def val(self) -> Union[int, float]:
+    def val(self) -> int | float:
         return int(self) if Integer.pattern.matches(str(self)) else self
 
 
@@ -102,5 +102,5 @@ class Boolean(JSGValidateable, metaclass=JSGPatternedValMeta):
 
         return v if isinstance(v, bool) else cls.true_pattern.matches(str(v))
 
-    def _is_valid(self, log: Optional[Logger] = None) -> bool:
+    def _is_valid(self, log: Logger | None = None) -> bool:
         return True

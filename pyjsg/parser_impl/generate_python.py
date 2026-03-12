@@ -2,7 +2,6 @@ import importlib.abc
 import importlib.util
 import os
 from argparse import ArgumentParser
-from typing import Optional, Union, List
 
 import sys
 from antlr4 import CommonTokenStream
@@ -54,7 +53,7 @@ def do_parse(infilename: str, outfilename: str, verbose: bool, header: bool) -> 
     return False
 
 
-def parse(input_: Union[str, FileStream], source: str, emit_header: bool=True) -> Optional[str]:
+def parse(input_: str | FileStream, source: str, emit_header: bool=True) -> str | None:
     """Parse the text in infile and save the results in outfile
 
     :param input_: string or stream to parse
@@ -121,7 +120,7 @@ def evaluate(module_name: str, fname: str, verbose: bool):
     spec.loader.exec_module(mod)
 
 
-def generate(argv: Optional[List[str]] = None) -> int:
+def generate(argv: list[str] | None = None) -> int:
     opts = genargs().parse_args(argv)
     file_base = str(os.path.basename(opts.infile.rsplit('.', 1)[0]))
     if not opts.outfile:

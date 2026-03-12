@@ -1,19 +1,12 @@
-import unittest
-
 from pyjsg.validate_json import JSGPython
 
 
-class IgnoreTestCase(unittest.TestCase):
+def test_ignore_issue():
     """ Test list of sequences in documentation """
-    def test_1(self):
-        x = JSGPython('''
+    x = JSGPython('''
 .IGNORE target;
 doc {a:@string}
 ''')
 
-        rslt = x.conforms('{"a":"hello", "target":"earthling"}')
-        self.assertTrue(rslt.success)
-
-
-if __name__ == '__main__':
-    unittest.main()
+    rslt = x.conforms('{"a":"hello", "target":"earthling"}')
+    assert rslt.success

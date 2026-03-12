@@ -24,12 +24,12 @@ class list_eval(jsg.JSGObject):
     def __init__(self,
                  req: str = None,
                  opt: typing.Optional[str] = None,
-                 zero_or_more: typing.List[str] = None,
-                 one_or_more: typing.List[str] = None,
-                 two_or_more: typing.List[str] = None,
-                 three_or_four: typing.List[str] = None,
-                 one_or_more_v2: typing.List[str] = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 zero_or_more: list[str] = None,
+                 one_or_more: list[str] = None,
+                 two_or_more: list[str] = None,
+                 three_or_four: list[str] = None,
+                 one_or_more_v2: list[str] = None,
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         self.req = req
         self.opt = opt

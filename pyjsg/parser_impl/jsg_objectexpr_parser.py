@@ -1,5 +1,3 @@
-from typing import Optional, Union, List, Tuple
-
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor
 from pyjsg.parser_impl.jsg_doc_context import JSGDocContext, PythonGeneratorElement
@@ -31,7 +29,7 @@ class {name}(jsg.JSGObjectMap):{name_filter}{value_type}
 
 
 _init_template = """    def __init__(self{signatures},
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs){initializers}
 """
 indent0 = ",\n                "
@@ -44,20 +42,20 @@ indent3 = indent2 + "    "
 class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
     """ objectExpr: OBRACE membersDef? CBRACE | OBRACE ID MAPSTO valueType CBRACE """
     def __init__(self, context: JSGDocContext,
-                 ctx: Optional[Union[jsgParser.ObjectExprContext, jsgParser.MembersDefContext]] = None,
-                 name: Optional[str] = None):
+                 ctx: jsgParser.ObjectExprContext | jsgParser.MembersDefContext | None = None,
+                 name: str | None = None):
         self._context = context
         self._name = name
         self._strict = True
 
         # _members, _choices and _map_name_type are mutually exclusive
-        self._members: List[JSGPairDef] = []
-        self._choices: List[str] = []
+        self._members: list[JSGPairDef] = []
+        self._choices: list[str] = []
 
         # _map is for a map style definition
-        self._map_name_type: Optional[Union[str, JSGLexerRuleBlock]] = None               # Name of a lexer rule block
-        self._map_valuetype: Optional[JSGValueType] = None
-        self._map_ebnf: Optional[JSGEbnf] = None
+        self._map_name_type: str | JSGLexerRuleBlock | None = None               # Name of a lexer rule block
+        self._map_valuetype: JSGValueType | None = None
+        self._map_ebnf: JSGEbnf | None = None
         self.text = ""
 
         if ctx:
@@ -139,7 +137,7 @@ class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
     def mt_value(self) -> str:
         return 'None'
 
-    def signatures(self, _: bool=False) -> List[str]:
+    def signatures(self, _: bool=False) -> list[str]:
         if self._map_valuetype:
             return []
         elif self._choices:
@@ -152,7 +150,7 @@ class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
         else:
             return flatten([pairdef.signatures() for pairdef in self._members])
 
-    def initializers(self, prefix: Optional[str] = None) -> List[str]:
+    def initializers(self, prefix: str | None = None) -> list[str]:
 
         if self._map_valuetype:
             return []
@@ -193,7 +191,7 @@ class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
         else:
             return flatten([pairdef.initializers(prefix) for pairdef in self._members])
 
-    def members_entries(self, all_are_optional: bool=False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool = False) -> list[tuple[str, str]]:
         """ Return an ordered list of elements for the _members section
 
         :param all_are_optional: True means we're in a choice situation so everything is optional
@@ -210,7 +208,7 @@ class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
             return []
         return rval
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         if self._members:
             return flatten_unique(member.dependency_list() for member in self._members)
         elif self._map_valuetype:
@@ -267,7 +265,7 @@ class JSGObjectExpr(jsgParserVisitor, PythonGeneratorElement):
     def visitPairDef(self, ctx: jsgParser.PairDefContext):
         self._members.append(JSGPairDef(self._context, ctx))
 
-    def _add_choice(self, branch: int, ctx: List[jsgParser.MemberContext]):
+    def _add_choice(self, branch: int, ctx: list[jsgParser.MemberContext]):
         choice_name = "{}_{}_".format(self._name, branch)
         choice_obj = JSGObjectExpr(self._context, name=choice_name)
         for member in ctx:

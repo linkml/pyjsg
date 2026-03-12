@@ -2,7 +2,7 @@ import os
 from argparse import ArgumentParser
 from io import StringIO
 from types import ModuleType
-from typing import cast, TextIO, NamedTuple, Optional
+from typing import cast, TextIO, NamedTuple
 
 import requests
 
@@ -14,7 +14,7 @@ class ValidationResult(NamedTuple):
     success: bool
     fail_reason: str
     test_name: str
-    type: Optional[str]
+    type: str | None
 
     def __str__(self) -> str:
         return (f"{self.test_name}: " if self.test_name else "") +\
@@ -22,7 +22,7 @@ class ValidationResult(NamedTuple):
 
 
 class JSGPython:
-    def __init__(self, jsg: Optional[str]=None, python: Optional[str]=None, print_python: bool=False) -> None:
+    def __init__(self, jsg: str | None = None, python: str | None = None, print_python: bool = False) -> None:
         """ Construct a jsg validation module
 
         :param jsg: JSG specification.  If none, use python
@@ -65,12 +65,11 @@ class JSGPython:
             with open(inp) as infile:
                 return infile.read()
 
-    def conforms(self, json: str, name: str = "", verbose: bool=False) -> ValidationResult:
+    def conforms(self, json: str, name: str = "") -> ValidationResult:
         """ Determine whether json conforms with the JSG specification
 
         :param json: JSON string, URI to JSON or file name with JSON
         :param name: Test name for ValidationResult -- printed in dx if present
-        :param verbose: True means print the response
         :return: pass/fail + fail reason
         """
         json = self._to_string(json) if not self.is_json(json) else json

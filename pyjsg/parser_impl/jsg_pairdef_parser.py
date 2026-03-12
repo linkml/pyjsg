@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from typing import Optional, List, Tuple, Dict
 
 from pyjsg.parser.jsgParser import *
 from pyjsg.parser.jsgParserVisitor import jsgParserVisitor
@@ -10,14 +9,14 @@ from pyjsg.parser_impl.parser_utils import as_token, is_valid_python, get_termin
 
 
 class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
-    def __init__(self, context: JSGDocContext, ctx: Optional[jsgParser.PairDefContext] = None):
+    def __init__(self, context: JSGDocContext, ctx: jsgParser.PairDefContext | None = None):
         self._context = context
 
         # PairDef can be one of "name: valueType [ebnsuffix]", "(name [|] name ...): valueType [ebnsuffix]" or type_ref
-        self._typ: Optional[JSGValueType] = None       # If absent, then _type reference
-        self._names: Dict[str, str] = OrderedDict()    # List of names associated with _typ
+        self._typ: JSGValueType | None = None       # If absent, then _type reference
+        self._names: dict[str, str] = OrderedDict()    # list of names associated with _typ
 
-        self._type_reference: Optional[str] = None     # Reference to external type
+        self._type_reference: str | None = None     # Reference to external type
 
         self._ebnf = JSGEbnf(context)                  # Cardinality of either branch
         self.text = ""
@@ -40,7 +39,7 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
     def is_reference_type(self) -> bool:
         return self._type_reference is not None
 
-    def members_entries(self, all_are_optional: Optional[bool] = False) -> List[Tuple[str, str]]:
+    def members_entries(self, all_are_optional: bool | None = False) -> list[tuple[str, str]]:
         """ Generate a list quoted raw name, signature type entries for this pairdef, recursively traversing
         reference types
 
@@ -48,7 +47,7 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
         :return: raw name/ signature type for all elements in this pair
         """
         if self._type_reference:
-            rval: List[Tuple[str, str]] = []
+            rval: list[tuple[str, str]] = []
             for n, t in self._context.reference(self._type_reference).members_entries(all_are_optional):
                 rval.append((n, self._ebnf.signature_cardinality(t, all_are_optional).format(name=n)))
             return rval
@@ -74,14 +73,14 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
     def mt_value(self) -> str:
         return self._typ.mt_value() if self._typ else self._context.reference(self._type_reference).mt_value()
 
-    def signatures(self, all_are_optional: Optional[bool] = False) -> List[str]:
+    def signatures(self, all_are_optional: bool | None = False) -> list[str]:
         """ Return the __init__ signature element(s) (var: type = default value).  Note that signatures are not
         generated for non-python names, although we do take the liberty of suffixing a '_' for reserved words
         (e.g. class: @int  generates "class_: int = None"
 
         :param all_are_optional: If True, all items are considered to be optional
 
-        :return: List of signatures
+        :return: list of signatures
         """
         if self._type_reference:
             # This assumes that references are to things that have signatures
@@ -93,7 +92,7 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
             return [f"{self._names[rn]}: {self.python_type()} = " 
                     f"{self._ebnf.mt_value(self._typ)}" for rn, cn in self._names.items() if is_valid_python(cn)]
 
-    def _initializer_for(self, raw_name: str, cooked_name: str, prefix: Optional[str]) -> List[str]:
+    def _initializer_for(self, raw_name: str, cooked_name: str, prefix: str | None) -> list[str]:
         """Create an initializer entry for the entry
 
         :param raw_name: name unadjusted for python compatibility.
@@ -128,7 +127,7 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
 
         return rval
 
-    def initializers(self, prefix: Optional[str] = None) -> List[str]:
+    def initializers(self, prefix: str | None = None) -> list[str]:
         """ Return the __init__ initializer assignment block """
         if self._type_reference:
             # This assumes that references are to things that have initializers
@@ -140,7 +139,7 @@ class JSGPairDef(jsgParserVisitor, PythonGeneratorElement):
         else:
             return flatten([self._initializer_for(rn, cn, prefix) for rn, cn in self._names.items()])
 
-    def dependency_list(self) -> List[str]:
+    def dependency_list(self) -> list[str]:
         return self._typ.dependency_list() if self._typ else [self._type_reference]
 
     # ***************

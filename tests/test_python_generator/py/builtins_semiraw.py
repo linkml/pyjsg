@@ -29,7 +29,7 @@ class doc(jsg.JSGObject):
                  if_: type(None) = jsg.Empty,
                  else_: list = None,
                  raise_: object = None,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
         setattr(self, 'class', class_ if class_ is not None else _kwargs.get('class', None))
         setattr(self, 'def', def_ if def_ is not None else _kwargs.get('def', None))
@@ -47,7 +47,7 @@ class another_object(jsg.JSGObject):
     _strict = False
 
     def __init__(self,
-                 **_kwargs: typing.Dict[str, object]):
+                 **_kwargs: dict[str, object]):
         super().__init__(_CONTEXT, **_kwargs)
 
 

@@ -1,9 +1,0 @@
-{ "id": "membership",
-  "list_name": "friends",
-  "members": [{"id": "person",
-               "name": "John Tweed",
-               "age": 17},
-               {"id": "person",
-                "name": "Sally Pope",
-                "age": 43}]
- }

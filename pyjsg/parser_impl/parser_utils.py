@@ -2,7 +2,6 @@ import ast
 import keyword
 from collections import OrderedDict
 from collections.abc import Iterable
-from typing import List, Set
 
 from pyjsg.parser.jsgParser import ParserRuleContext
 
@@ -11,7 +10,7 @@ def t(n: int=1) -> str:
     return '    ' * n
 
 
-def flatten(l: Iterable) -> List:
+def flatten(l: Iterable) -> list:
     """Return a list of all non-list items in l
 
     :param l: list to be flattened
@@ -27,7 +26,7 @@ def flatten(l: Iterable) -> List:
     return rval
 
 
-def flatten_unique(l: Iterable) -> List:
+def flatten_unique(l: Iterable) -> list:
     """ Return a list of UNIQUE non-list items in l """
     rval = OrderedDict()
     for e in l:
@@ -39,7 +38,7 @@ def flatten_unique(l: Iterable) -> List:
     return list(rval.keys())
 
 
-def as_set(l: Iterable) -> Set:
+def as_set(l: Iterable) -> set:
     """ Return the set of all terminals in list l
 
     :param l:
@@ -82,7 +81,7 @@ def as_token(ctx: ParserRuleContext) -> str:
     return esc_kw(get_terminal(ctx))
 
 
-def as_tokens(ctx: List[ParserRuleContext]) -> List[str]:
+def as_tokens(ctx: list[ParserRuleContext]) -> list[str]:
     """Return a stringified list of identifiers in ctx
 
     :param ctx: JSG parser item with a set of identifiers
