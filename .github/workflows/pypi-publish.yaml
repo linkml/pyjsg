@@ -14,16 +14,18 @@ jobs:
     - uses: actions/checkout@v6
     - uses: actions/setup-python@v6
       with:
-        python-version: 3.8
+        python-version: 3.14
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install wheel
-    - name: build a binary wheel dist
+        pip install build wheel
+
+    - name: Build binary wheel and source dist
       run: |
         rm -rf dist
-        python setup.py bdist_wheel sdist
+        python -m build
+
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@v1.2.2
       with:
