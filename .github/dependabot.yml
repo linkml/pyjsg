@@ -12,6 +12,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
+    open-pull-requests-limit: 10
     groups:
       patch-updates:
         applies-to: version-updates
@@ -19,4 +20,16 @@ updates:
           - "*"
         update-types:
           - "patch"
+      minor-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+
+  - package-ecosystem: "github-actions"
+    directories:
+      - "/"
+    schedule:
+      interval: "monthly"
     open-pull-requests-limit: 10
