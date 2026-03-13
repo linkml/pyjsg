@@ -39,6 +39,7 @@ dynamic = ["version"]
 dependencies = [
   "antlr4-python3-runtime~=4.9.3",
   "jsonasobj>=1.2.1",
+  "requests",
 ]
 
 [project.scripts]
@@ -57,7 +58,6 @@ packages = ["pyjsg"]
 
 [dependency-groups]
 dev = [
-    "requests",
     "yadict_compare",
     "pytest",
     "pytest-forked",
