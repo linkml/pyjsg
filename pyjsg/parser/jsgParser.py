@@ -1,163 +1,132 @@
-# Generated from jsgParser.g4 by ANTLR 4.9
+# Generated from jsgParser.g4 by ANTLR 4.13.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
 import sys
-
-from typing import TextIO
-
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
 
 def serializedATN():
-    with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'")
-        buf.write("\u0143\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
-        buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
-        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
-        buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
-        buf.write("\t\31\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36")
-        buf.write("\4\37\t\37\4 \t \4!\t!\4\"\t\"\3\2\5\2F\n\2\3\2\7\2I\n")
-        buf.write("\2\f\2\16\2L\13\2\3\2\7\2O\n\2\f\2\16\2R\13\2\3\2\5\2")
-        buf.write("U\n\2\3\2\3\2\3\3\3\3\3\3\5\3\\\n\3\3\3\3\3\3\4\3\4\6")
-        buf.write("\4b\n\4\r\4\16\4c\3\5\3\5\7\5h\n\5\f\5\16\5k\13\5\3\5")
-        buf.write("\3\5\3\6\3\6\3\6\3\6\5\6s\n\6\3\7\3\7\3\7\3\b\3\b\5\b")
-        buf.write("z\n\b\3\b\3\b\3\b\5\b\177\n\b\3\b\3\b\3\b\5\b\u0084\n")
-        buf.write("\b\3\b\3\b\5\b\u0088\n\b\3\t\3\t\6\t\u008c\n\t\r\t\16")
-        buf.write("\t\u008d\3\t\3\t\7\t\u0092\n\t\f\t\16\t\u0095\13\t\3\t")
-        buf.write("\3\t\5\t\u0099\n\t\5\t\u009b\n\t\3\n\7\n\u009e\n\n\f\n")
-        buf.write("\16\n\u00a1\13\n\3\13\3\13\5\13\u00a5\n\13\3\f\3\f\3\r")
-        buf.write("\3\r\3\r\3\r\5\r\u00ad\n\r\3\r\3\r\5\r\u00b1\n\r\3\r\3")
-        buf.write("\r\6\r\u00b5\n\r\r\r\16\r\u00b6\3\r\3\r\3\r\3\r\5\r\u00bd")
-        buf.write("\n\r\5\r\u00bf\n\r\3\16\3\16\3\17\3\17\3\17\3\20\3\20")
-        buf.write("\3\20\3\20\7\20\u00ca\n\20\f\20\16\20\u00cd\13\20\3\20")
-        buf.write("\5\20\u00d0\n\20\3\20\3\20\3\21\3\21\3\21\3\21\3\21\3")
-        buf.write("\22\3\22\3\22\3\22\3\22\7\22\u00de\n\22\f\22\16\22\u00e1")
-        buf.write("\13\22\3\22\3\22\3\23\3\23\3\24\3\24\5\24\u00e9\n\24\3")
-        buf.write("\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u00f4")
-        buf.write("\n\25\3\26\3\26\3\26\6\26\u00f9\n\26\r\26\16\26\u00fa")
-        buf.write("\3\27\3\27\3\30\3\30\3\30\3\30\3\30\3\30\3\30\5\30\u0106")
-        buf.write("\n\30\5\30\u0108\n\30\3\30\5\30\u010b\n\30\3\31\3\31\7")
-        buf.write("\31\u010f\n\31\f\31\16\31\u0112\13\31\3\32\3\32\3\32\3")
-        buf.write("\32\3\32\3\33\3\33\5\33\u011b\n\33\3\34\3\34\3\34\7\34")
-        buf.write("\u0120\n\34\f\34\16\34\u0123\13\34\3\35\3\35\5\35\u0127")
-        buf.write("\n\35\3\36\6\36\u012a\n\36\r\36\16\36\u012b\3\37\3\37")
-        buf.write("\5\37\u0130\n\37\3\37\3\37\5\37\u0134\n\37\5\37\u0136")
-        buf.write("\n\37\3 \3 \3 \3 \3!\3!\3!\5!\u013f\n!\3\"\3\"\3\"\2\2")
-        buf.write("#\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62")
-        buf.write("\64\668:<>@B\2\7\4\2\3\3\7\7\3\2\4\5\4\2\7\7\f\22\4\2")
-        buf.write("\6\6\32\32\4\2\5\5$$\2\u0154\2E\3\2\2\2\4X\3\2\2\2\6_")
-        buf.write("\3\2\2\2\be\3\2\2\2\nr\3\2\2\2\ft\3\2\2\2\16\u0087\3\2")
-        buf.write("\2\2\20\u009a\3\2\2\2\22\u009f\3\2\2\2\24\u00a2\3\2\2")
-        buf.write("\2\26\u00a6\3\2\2\2\30\u00be\3\2\2\2\32\u00c0\3\2\2\2")
-        buf.write("\34\u00c2\3\2\2\2\36\u00c5\3\2\2\2 \u00d3\3\2\2\2\"\u00d8")
-        buf.write("\3\2\2\2$\u00e4\3\2\2\2&\u00e8\3\2\2\2(\u00f3\3\2\2\2")
-        buf.write("*\u00f5\3\2\2\2,\u00fc\3\2\2\2.\u010a\3\2\2\2\60\u010c")
-        buf.write("\3\2\2\2\62\u0113\3\2\2\2\64\u0118\3\2\2\2\66\u011c\3")
-        buf.write("\2\2\28\u0126\3\2\2\2:\u0129\3\2\2\2<\u0135\3\2\2\2>\u0137")
-        buf.write("\3\2\2\2@\u013e\3\2\2\2B\u0140\3\2\2\2DF\5\4\3\2ED\3\2")
-        buf.write("\2\2EF\3\2\2\2FJ\3\2\2\2GI\5\b\5\2HG\3\2\2\2IL\3\2\2\2")
-        buf.write("JH\3\2\2\2JK\3\2\2\2KP\3\2\2\2LJ\3\2\2\2MO\5\n\6\2NM\3")
-        buf.write("\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3\2\2\2QT\3\2\2\2RP\3\2\2")
-        buf.write("\2SU\5\60\31\2TS\3\2\2\2TU\3\2\2\2UV\3\2\2\2VW\7\2\2\3")
-        buf.write("W\3\3\2\2\2XY\7\t\2\2Y[\5\32\16\2Z\\\5\6\4\2[Z\3\2\2\2")
-        buf.write("[\\\3\2\2\2\\]\3\2\2\2]^\7\25\2\2^\5\3\2\2\2_a\7\26\2")
-        buf.write("\2`b\5,\27\2a`\3\2\2\2bc\3\2\2\2ca\3\2\2\2cd\3\2\2\2d")
-        buf.write("\7\3\2\2\2ei\7\n\2\2fh\5\32\16\2gf\3\2\2\2hk\3\2\2\2i")
-        buf.write("g\3\2\2\2ij\3\2\2\2jl\3\2\2\2ki\3\2\2\2lm\7\25\2\2m\t")
-        buf.write("\3\2\2\2ns\5\f\7\2os\5\34\17\2ps\5 \21\2qs\5\"\22\2rn")
-        buf.write("\3\2\2\2ro\3\2\2\2rp\3\2\2\2rq\3\2\2\2s\13\3\2\2\2tu\7")
-        buf.write("\4\2\2uv\5\16\b\2v\r\3\2\2\2wy\7\27\2\2xz\5\20\t\2yx\3")
-        buf.write("\2\2\2yz\3\2\2\2z{\3\2\2\2{\u0088\7\30\2\2|~\7\27\2\2")
-        buf.write("}\177\t\2\2\2~}\3\2\2\2~\177\3\2\2\2\177\u0080\3\2\2\2")
-        buf.write("\u0080\u0081\7\13\2\2\u0081\u0083\5&\24\2\u0082\u0084")
-        buf.write("\5.\30\2\u0083\u0082\3\2\2\2\u0083\u0084\3\2\2\2\u0084")
-        buf.write("\u0085\3\2\2\2\u0085\u0086\7\30\2\2\u0086\u0088\3\2\2")
-        buf.write("\2\u0087w\3\2\2\2\u0087|\3\2\2\2\u0088\17\3\2\2\2\u0089")
-        buf.write("\u009b\7\31\2\2\u008a\u008c\5\24\13\2\u008b\u008a\3\2")
-        buf.write("\2\2\u008c\u008d\3\2\2\2\u008d\u008b\3\2\2\2\u008d\u008e")
-        buf.write("\3\2\2\2\u008e\u0093\3\2\2\2\u008f\u0090\7\37\2\2\u0090")
-        buf.write("\u0092\5\22\n\2\u0091\u008f\3\2\2\2\u0092\u0095\3\2\2")
-        buf.write("\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094\u0098")
-        buf.write("\3\2\2\2\u0095\u0093\3\2\2\2\u0096\u0097\7\37\2\2\u0097")
-        buf.write("\u0099\5\26\f\2\u0098\u0096\3\2\2\2\u0098\u0099\3\2\2")
-        buf.write("\2\u0099\u009b\3\2\2\2\u009a\u0089\3\2\2\2\u009a\u008b")
-        buf.write("\3\2\2\2\u009b\21\3\2\2\2\u009c\u009e\5\24\13\2\u009d")
-        buf.write("\u009c\3\2\2\2\u009e\u00a1\3\2\2\2\u009f\u009d\3\2\2\2")
-        buf.write("\u009f\u00a0\3\2\2\2\u00a0\23\3\2\2\2\u00a1\u009f\3\2")
-        buf.write("\2\2\u00a2\u00a4\5\30\r\2\u00a3\u00a5\7\31\2\2\u00a4\u00a3")
-        buf.write("\3\2\2\2\u00a4\u00a5\3\2\2\2\u00a5\25\3\2\2\2\u00a6\u00a7")
-        buf.write("\7\31\2\2\u00a7\27\3\2\2\2\u00a8\u00a9\5\32\16\2\u00a9")
-        buf.write("\u00aa\7 \2\2\u00aa\u00ac\5&\24\2\u00ab\u00ad\5.\30\2")
-        buf.write("\u00ac\u00ab\3\2\2\2\u00ac\u00ad\3\2\2\2\u00ad\u00bf\3")
-        buf.write("\2\2\2\u00ae\u00b0\5,\27\2\u00af\u00b1\5.\30\2\u00b0\u00af")
-        buf.write("\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00bf\3\2\2\2\u00b2")
-        buf.write("\u00b4\7\35\2\2\u00b3\u00b5\5\32\16\2\u00b4\u00b3\3\2")
-        buf.write("\2\2\u00b5\u00b6\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b6\u00b7")
-        buf.write("\3\2\2\2\u00b7\u00b8\3\2\2\2\u00b8\u00b9\7\36\2\2\u00b9")
-        buf.write("\u00ba\7 \2\2\u00ba\u00bc\5&\24\2\u00bb\u00bd\5.\30\2")
-        buf.write("\u00bc\u00bb\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\u00bf\3")
-        buf.write("\2\2\2\u00be\u00a8\3\2\2\2\u00be\u00ae\3\2\2\2\u00be\u00b2")
-        buf.write("\3\2\2\2\u00bf\31\3\2\2\2\u00c0\u00c1\t\3\2\2\u00c1\33")
-        buf.write("\3\2\2\2\u00c2\u00c3\7\4\2\2\u00c3\u00c4\5\36\20\2\u00c4")
-        buf.write("\35\3\2\2\2\u00c5\u00c6\7\23\2\2\u00c6\u00cb\5&\24\2\u00c7")
-        buf.write("\u00c8\7\37\2\2\u00c8\u00ca\5&\24\2\u00c9\u00c7\3\2\2")
-        buf.write("\2\u00ca\u00cd\3\2\2\2\u00cb\u00c9\3\2\2\2\u00cb\u00cc")
-        buf.write("\3\2\2\2\u00cc\u00cf\3\2\2\2\u00cd\u00cb\3\2\2\2\u00ce")
-        buf.write("\u00d0\5.\30\2\u00cf\u00ce\3\2\2\2\u00cf\u00d0\3\2\2\2")
-        buf.write("\u00d0\u00d1\3\2\2\2\u00d1\u00d2\7\24\2\2\u00d2\37\3\2")
-        buf.write("\2\2\u00d3\u00d4\7\4\2\2\u00d4\u00d5\7!\2\2\u00d5\u00d6")
-        buf.write("\5\20\t\2\u00d6\u00d7\7\25\2\2\u00d7!\3\2\2\2\u00d8\u00d9")
-        buf.write("\7\4\2\2\u00d9\u00da\7!\2\2\u00da\u00df\5(\25\2\u00db")
-        buf.write("\u00dc\7\37\2\2\u00dc\u00de\5(\25\2\u00dd\u00db\3\2\2")
-        buf.write("\2\u00de\u00e1\3\2\2\2\u00df\u00dd\3\2\2\2\u00df\u00e0")
-        buf.write("\3\2\2\2\u00e0\u00e2\3\2\2\2\u00e1\u00df\3\2\2\2\u00e2")
-        buf.write("\u00e3\7\25\2\2\u00e3#\3\2\2\2\u00e4\u00e5\t\4\2\2\u00e5")
-        buf.write("%\3\2\2\2\u00e6\u00e9\5,\27\2\u00e7\u00e9\5(\25\2\u00e8")
-        buf.write("\u00e6\3\2\2\2\u00e8\u00e7\3\2\2\2\u00e9\'\3\2\2\2\u00ea")
-        buf.write("\u00f4\7\3\2\2\u00eb\u00f4\7\5\2\2\u00ec\u00f4\5$\23\2")
-        buf.write("\u00ed\u00f4\5\16\b\2\u00ee\u00f4\5\36\20\2\u00ef\u00f0")
-        buf.write("\7\35\2\2\u00f0\u00f1\5*\26\2\u00f1\u00f2\7\36\2\2\u00f2")
-        buf.write("\u00f4\3\2\2\2\u00f3\u00ea\3\2\2\2\u00f3\u00eb\3\2\2\2")
-        buf.write("\u00f3\u00ec\3\2\2\2\u00f3\u00ed\3\2\2\2\u00f3\u00ee\3")
-        buf.write("\2\2\2\u00f3\u00ef\3\2\2\2\u00f4)\3\2\2\2\u00f5\u00f8")
-        buf.write("\5&\24\2\u00f6\u00f7\7\37\2\2\u00f7\u00f9\5&\24\2\u00f8")
-        buf.write("\u00f6\3\2\2\2\u00f9\u00fa\3\2\2\2\u00fa\u00f8\3\2\2\2")
-        buf.write("\u00fa\u00fb\3\2\2\2\u00fb+\3\2\2\2\u00fc\u00fd\7\4\2")
-        buf.write("\2\u00fd-\3\2\2\2\u00fe\u010b\7\33\2\2\u00ff\u010b\7\32")
-        buf.write("\2\2\u0100\u010b\7\34\2\2\u0101\u0102\7\27\2\2\u0102\u0107")
-        buf.write("\7\6\2\2\u0103\u0105\7\31\2\2\u0104\u0106\t\5\2\2\u0105")
-        buf.write("\u0104\3\2\2\2\u0105\u0106\3\2\2\2\u0106\u0108\3\2\2\2")
-        buf.write("\u0107\u0103\3\2\2\2\u0107\u0108\3\2\2\2\u0108\u0109\3")
-        buf.write("\2\2\2\u0109\u010b\7\30\2\2\u010a\u00fe\3\2\2\2\u010a")
-        buf.write("\u00ff\3\2\2\2\u010a\u0100\3\2\2\2\u010a\u0101\3\2\2\2")
-        buf.write("\u010b/\3\2\2\2\u010c\u0110\7\b\2\2\u010d\u010f\5\62\32")
-        buf.write("\2\u010e\u010d\3\2\2\2\u010f\u0112\3\2\2\2\u0110\u010e")
-        buf.write("\3\2\2\2\u0110\u0111\3\2\2\2\u0111\61\3\2\2\2\u0112\u0110")
-        buf.write("\3\2\2\2\u0113\u0114\7$\2\2\u0114\u0115\7 \2\2\u0115\u0116")
-        buf.write("\5\64\33\2\u0116\u0117\7\25\2\2\u0117\63\3\2\2\2\u0118")
-        buf.write("\u011a\5\66\34\2\u0119\u011b\5$\23\2\u011a\u0119\3\2\2")
-        buf.write("\2\u011a\u011b\3\2\2\2\u011b\65\3\2\2\2\u011c\u0121\5")
-        buf.write("8\35\2\u011d\u011e\7\37\2\2\u011e\u0120\58\35\2\u011f")
-        buf.write("\u011d\3\2\2\2\u0120\u0123\3\2\2\2\u0121\u011f\3\2\2\2")
-        buf.write("\u0121\u0122\3\2\2\2\u0122\67\3\2\2\2\u0123\u0121\3\2")
-        buf.write("\2\2\u0124\u0127\5:\36\2\u0125\u0127\3\2\2\2\u0126\u0124")
-        buf.write("\3\2\2\2\u0126\u0125\3\2\2\2\u01279\3\2\2\2\u0128\u012a")
-        buf.write("\5<\37\2\u0129\u0128\3\2\2\2\u012a\u012b\3\2\2\2\u012b")
-        buf.write("\u0129\3\2\2\2\u012b\u012c\3\2\2\2\u012c;\3\2\2\2\u012d")
-        buf.write("\u012f\5@!\2\u012e\u0130\5.\30\2\u012f\u012e\3\2\2\2\u012f")
-        buf.write("\u0130\3\2\2\2\u0130\u0136\3\2\2\2\u0131\u0133\5> \2\u0132")
-        buf.write("\u0134\5.\30\2\u0133\u0132\3\2\2\2\u0133\u0134\3\2\2\2")
-        buf.write("\u0134\u0136\3\2\2\2\u0135\u012d\3\2\2\2\u0135\u0131\3")
-        buf.write("\2\2\2\u0136=\3\2\2\2\u0137\u0138\7\35\2\2\u0138\u0139")
-        buf.write("\5\66\34\2\u0139\u013a\7\36\2\2\u013a?\3\2\2\2\u013b\u013f")
-        buf.write("\5B\"\2\u013c\u013f\7%\2\2\u013d\u013f\7\7\2\2\u013e\u013b")
-        buf.write("\3\2\2\2\u013e\u013c\3\2\2\2\u013e\u013d\3\2\2\2\u013f")
-        buf.write("A\3\2\2\2\u0140\u0141\t\6\2\2\u0141C\3\2\2\2+EJPT[cir")
-        buf.write("y~\u0083\u0087\u008d\u0093\u0098\u009a\u009f\u00a4\u00ac")
-        buf.write("\u00b0\u00b6\u00bc\u00be\u00cb\u00cf\u00df\u00e8\u00f3")
-        buf.write("\u00fa\u0105\u0107\u010a\u0110\u011a\u0121\u0126\u012b")
-        buf.write("\u012f\u0133\u0135\u013e")
-        return buf.getvalue()
-
+    return [
+        4,1,37,321,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
+        7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
+        2,27,7,27,2,28,7,28,2,29,7,29,2,30,7,30,2,31,7,31,2,32,7,32,1,0,
+        3,0,68,8,0,1,0,5,0,71,8,0,10,0,12,0,74,9,0,1,0,5,0,77,8,0,10,0,12,
+        0,80,9,0,1,0,3,0,83,8,0,1,0,1,0,1,1,1,1,1,1,3,1,90,8,1,1,1,1,1,1,
+        2,1,2,4,2,96,8,2,11,2,12,2,97,1,3,1,3,5,3,102,8,3,10,3,12,3,105,
+        9,3,1,3,1,3,1,4,1,4,1,4,1,4,3,4,113,8,4,1,5,1,5,1,5,1,6,1,6,3,6,
+        120,8,6,1,6,1,6,1,6,3,6,125,8,6,1,6,1,6,1,6,3,6,130,8,6,1,6,1,6,
+        3,6,134,8,6,1,7,1,7,4,7,138,8,7,11,7,12,7,139,1,7,1,7,5,7,144,8,
+        7,10,7,12,7,147,9,7,1,7,1,7,3,7,151,8,7,3,7,153,8,7,1,8,5,8,156,
+        8,8,10,8,12,8,159,9,8,1,9,1,9,3,9,163,8,9,1,10,1,10,1,11,1,11,1,
+        11,1,11,3,11,171,8,11,1,11,1,11,3,11,175,8,11,1,11,1,11,4,11,179,
+        8,11,11,11,12,11,180,1,11,1,11,1,11,1,11,3,11,187,8,11,3,11,189,
+        8,11,1,12,1,12,1,13,1,13,1,13,1,14,1,14,1,14,1,14,5,14,200,8,14,
+        10,14,12,14,203,9,14,1,14,3,14,206,8,14,1,14,1,14,1,15,1,15,1,15,
+        1,15,1,15,1,16,1,16,1,16,1,16,1,16,5,16,220,8,16,10,16,12,16,223,
+        9,16,1,16,1,16,1,17,1,17,1,18,1,18,3,18,231,8,18,1,19,1,19,1,19,
+        1,19,1,19,1,19,1,19,1,19,1,19,3,19,242,8,19,1,20,1,20,1,20,4,20,
+        247,8,20,11,20,12,20,248,1,21,1,21,1,22,1,22,1,22,1,22,1,22,1,22,
+        1,22,3,22,260,8,22,3,22,262,8,22,1,22,3,22,265,8,22,1,23,1,23,5,
+        23,269,8,23,10,23,12,23,272,9,23,1,24,1,24,1,24,1,24,1,24,1,25,1,
+        25,3,25,281,8,25,1,26,1,26,1,26,5,26,286,8,26,10,26,12,26,289,9,
+        26,1,27,1,27,3,27,293,8,27,1,28,4,28,296,8,28,11,28,12,28,297,1,
+        29,1,29,3,29,302,8,29,1,29,1,29,3,29,306,8,29,3,29,308,8,29,1,30,
+        1,30,1,30,1,30,1,31,1,31,1,31,3,31,317,8,31,1,32,1,32,1,32,0,0,33,
+        0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,
+        46,48,50,52,54,56,58,60,62,64,0,5,2,0,1,1,5,5,1,0,2,3,2,0,5,5,10,
+        16,2,0,4,4,24,24,2,0,3,3,34,34,338,0,67,1,0,0,0,2,86,1,0,0,0,4,93,
+        1,0,0,0,6,99,1,0,0,0,8,112,1,0,0,0,10,114,1,0,0,0,12,133,1,0,0,0,
+        14,152,1,0,0,0,16,157,1,0,0,0,18,160,1,0,0,0,20,164,1,0,0,0,22,188,
+        1,0,0,0,24,190,1,0,0,0,26,192,1,0,0,0,28,195,1,0,0,0,30,209,1,0,
+        0,0,32,214,1,0,0,0,34,226,1,0,0,0,36,230,1,0,0,0,38,241,1,0,0,0,
+        40,243,1,0,0,0,42,250,1,0,0,0,44,264,1,0,0,0,46,266,1,0,0,0,48,273,
+        1,0,0,0,50,278,1,0,0,0,52,282,1,0,0,0,54,292,1,0,0,0,56,295,1,0,
+        0,0,58,307,1,0,0,0,60,309,1,0,0,0,62,316,1,0,0,0,64,318,1,0,0,0,
+        66,68,3,2,1,0,67,66,1,0,0,0,67,68,1,0,0,0,68,72,1,0,0,0,69,71,3,
+        6,3,0,70,69,1,0,0,0,71,74,1,0,0,0,72,70,1,0,0,0,72,73,1,0,0,0,73,
+        78,1,0,0,0,74,72,1,0,0,0,75,77,3,8,4,0,76,75,1,0,0,0,77,80,1,0,0,
+        0,78,76,1,0,0,0,78,79,1,0,0,0,79,82,1,0,0,0,80,78,1,0,0,0,81,83,
+        3,46,23,0,82,81,1,0,0,0,82,83,1,0,0,0,83,84,1,0,0,0,84,85,5,0,0,
+        1,85,1,1,0,0,0,86,87,5,7,0,0,87,89,3,24,12,0,88,90,3,4,2,0,89,88,
+        1,0,0,0,89,90,1,0,0,0,90,91,1,0,0,0,91,92,5,19,0,0,92,3,1,0,0,0,
+        93,95,5,20,0,0,94,96,3,42,21,0,95,94,1,0,0,0,96,97,1,0,0,0,97,95,
+        1,0,0,0,97,98,1,0,0,0,98,5,1,0,0,0,99,103,5,8,0,0,100,102,3,24,12,
+        0,101,100,1,0,0,0,102,105,1,0,0,0,103,101,1,0,0,0,103,104,1,0,0,
+        0,104,106,1,0,0,0,105,103,1,0,0,0,106,107,5,19,0,0,107,7,1,0,0,0,
+        108,113,3,10,5,0,109,113,3,26,13,0,110,113,3,30,15,0,111,113,3,32,
+        16,0,112,108,1,0,0,0,112,109,1,0,0,0,112,110,1,0,0,0,112,111,1,0,
+        0,0,113,9,1,0,0,0,114,115,5,2,0,0,115,116,3,12,6,0,116,11,1,0,0,
+        0,117,119,5,21,0,0,118,120,3,14,7,0,119,118,1,0,0,0,119,120,1,0,
+        0,0,120,121,1,0,0,0,121,134,5,22,0,0,122,124,5,21,0,0,123,125,7,
+        0,0,0,124,123,1,0,0,0,124,125,1,0,0,0,125,126,1,0,0,0,126,127,5,
+        9,0,0,127,129,3,36,18,0,128,130,3,44,22,0,129,128,1,0,0,0,129,130,
+        1,0,0,0,130,131,1,0,0,0,131,132,5,22,0,0,132,134,1,0,0,0,133,117,
+        1,0,0,0,133,122,1,0,0,0,134,13,1,0,0,0,135,153,5,23,0,0,136,138,
+        3,18,9,0,137,136,1,0,0,0,138,139,1,0,0,0,139,137,1,0,0,0,139,140,
+        1,0,0,0,140,145,1,0,0,0,141,142,5,29,0,0,142,144,3,16,8,0,143,141,
+        1,0,0,0,144,147,1,0,0,0,145,143,1,0,0,0,145,146,1,0,0,0,146,150,
+        1,0,0,0,147,145,1,0,0,0,148,149,5,29,0,0,149,151,3,20,10,0,150,148,
+        1,0,0,0,150,151,1,0,0,0,151,153,1,0,0,0,152,135,1,0,0,0,152,137,
+        1,0,0,0,153,15,1,0,0,0,154,156,3,18,9,0,155,154,1,0,0,0,156,159,
+        1,0,0,0,157,155,1,0,0,0,157,158,1,0,0,0,158,17,1,0,0,0,159,157,1,
+        0,0,0,160,162,3,22,11,0,161,163,5,23,0,0,162,161,1,0,0,0,162,163,
+        1,0,0,0,163,19,1,0,0,0,164,165,5,23,0,0,165,21,1,0,0,0,166,167,3,
+        24,12,0,167,168,5,30,0,0,168,170,3,36,18,0,169,171,3,44,22,0,170,
+        169,1,0,0,0,170,171,1,0,0,0,171,189,1,0,0,0,172,174,3,42,21,0,173,
+        175,3,44,22,0,174,173,1,0,0,0,174,175,1,0,0,0,175,189,1,0,0,0,176,
+        178,5,27,0,0,177,179,3,24,12,0,178,177,1,0,0,0,179,180,1,0,0,0,180,
+        178,1,0,0,0,180,181,1,0,0,0,181,182,1,0,0,0,182,183,5,28,0,0,183,
+        184,5,30,0,0,184,186,3,36,18,0,185,187,3,44,22,0,186,185,1,0,0,0,
+        186,187,1,0,0,0,187,189,1,0,0,0,188,166,1,0,0,0,188,172,1,0,0,0,
+        188,176,1,0,0,0,189,23,1,0,0,0,190,191,7,1,0,0,191,25,1,0,0,0,192,
+        193,5,2,0,0,193,194,3,28,14,0,194,27,1,0,0,0,195,196,5,17,0,0,196,
+        201,3,36,18,0,197,198,5,29,0,0,198,200,3,36,18,0,199,197,1,0,0,0,
+        200,203,1,0,0,0,201,199,1,0,0,0,201,202,1,0,0,0,202,205,1,0,0,0,
+        203,201,1,0,0,0,204,206,3,44,22,0,205,204,1,0,0,0,205,206,1,0,0,
+        0,206,207,1,0,0,0,207,208,5,18,0,0,208,29,1,0,0,0,209,210,5,2,0,
+        0,210,211,5,31,0,0,211,212,3,14,7,0,212,213,5,19,0,0,213,31,1,0,
+        0,0,214,215,5,2,0,0,215,216,5,31,0,0,216,221,3,38,19,0,217,218,5,
+        29,0,0,218,220,3,38,19,0,219,217,1,0,0,0,220,223,1,0,0,0,221,219,
+        1,0,0,0,221,222,1,0,0,0,222,224,1,0,0,0,223,221,1,0,0,0,224,225,
+        5,19,0,0,225,33,1,0,0,0,226,227,7,2,0,0,227,35,1,0,0,0,228,231,3,
+        42,21,0,229,231,3,38,19,0,230,228,1,0,0,0,230,229,1,0,0,0,231,37,
+        1,0,0,0,232,242,5,1,0,0,233,242,5,3,0,0,234,242,3,34,17,0,235,242,
+        3,12,6,0,236,242,3,28,14,0,237,238,5,27,0,0,238,239,3,40,20,0,239,
+        240,5,28,0,0,240,242,1,0,0,0,241,232,1,0,0,0,241,233,1,0,0,0,241,
+        234,1,0,0,0,241,235,1,0,0,0,241,236,1,0,0,0,241,237,1,0,0,0,242,
+        39,1,0,0,0,243,246,3,36,18,0,244,245,5,29,0,0,245,247,3,36,18,0,
+        246,244,1,0,0,0,247,248,1,0,0,0,248,246,1,0,0,0,248,249,1,0,0,0,
+        249,41,1,0,0,0,250,251,5,2,0,0,251,43,1,0,0,0,252,265,5,25,0,0,253,
+        265,5,24,0,0,254,265,5,26,0,0,255,256,5,21,0,0,256,261,5,4,0,0,257,
+        259,5,23,0,0,258,260,7,3,0,0,259,258,1,0,0,0,259,260,1,0,0,0,260,
+        262,1,0,0,0,261,257,1,0,0,0,261,262,1,0,0,0,262,263,1,0,0,0,263,
+        265,5,22,0,0,264,252,1,0,0,0,264,253,1,0,0,0,264,254,1,0,0,0,264,
+        255,1,0,0,0,265,45,1,0,0,0,266,270,5,6,0,0,267,269,3,48,24,0,268,
+        267,1,0,0,0,269,272,1,0,0,0,270,268,1,0,0,0,270,271,1,0,0,0,271,
+        47,1,0,0,0,272,270,1,0,0,0,273,274,5,34,0,0,274,275,5,30,0,0,275,
+        276,3,50,25,0,276,277,5,19,0,0,277,49,1,0,0,0,278,280,3,52,26,0,
+        279,281,3,34,17,0,280,279,1,0,0,0,280,281,1,0,0,0,281,51,1,0,0,0,
+        282,287,3,54,27,0,283,284,5,29,0,0,284,286,3,54,27,0,285,283,1,0,
+        0,0,286,289,1,0,0,0,287,285,1,0,0,0,287,288,1,0,0,0,288,53,1,0,0,
+        0,289,287,1,0,0,0,290,293,3,56,28,0,291,293,1,0,0,0,292,290,1,0,
+        0,0,292,291,1,0,0,0,293,55,1,0,0,0,294,296,3,58,29,0,295,294,1,0,
+        0,0,296,297,1,0,0,0,297,295,1,0,0,0,297,298,1,0,0,0,298,57,1,0,0,
+        0,299,301,3,62,31,0,300,302,3,44,22,0,301,300,1,0,0,0,301,302,1,
+        0,0,0,302,308,1,0,0,0,303,305,3,60,30,0,304,306,3,44,22,0,305,304,
+        1,0,0,0,305,306,1,0,0,0,306,308,1,0,0,0,307,299,1,0,0,0,307,303,
+        1,0,0,0,308,59,1,0,0,0,309,310,5,27,0,0,310,311,3,52,26,0,311,312,
+        5,28,0,0,312,61,1,0,0,0,313,317,3,64,32,0,314,317,5,35,0,0,315,317,
+        5,5,0,0,316,313,1,0,0,0,316,314,1,0,0,0,316,315,1,0,0,0,317,63,1,
+        0,0,0,318,319,7,4,0,0,319,65,1,0,0,0,41,67,72,78,82,89,97,103,112,
+        119,124,129,133,139,145,150,152,157,162,170,174,180,186,188,201,
+        205,221,230,241,248,259,261,264,270,280,287,292,297,301,305,307,
+        316
+    ]
 
 class jsgParser ( Parser ):
 
@@ -271,7 +240,7 @@ class jsgParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.9")
+        self.checkVersion("4.13.2")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -279,6 +248,7 @@ class jsgParser ( Parser ):
 
 
     class DocContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -331,7 +301,7 @@ class jsgParser ( Parser ):
             self.state = 67
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==jsgParser.TYPE:
+            if _la==7:
                 self.state = 66
                 self.typeDirective()
 
@@ -339,7 +309,7 @@ class jsgParser ( Parser ):
             self.state = 72
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.IGNORE:
+            while _la==8:
                 self.state = 69
                 self.ignoreDirective()
                 self.state = 74
@@ -349,7 +319,7 @@ class jsgParser ( Parser ):
             self.state = 78
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.ID:
+            while _la==2:
                 self.state = 75
                 self.grammarElt()
                 self.state = 80
@@ -359,7 +329,7 @@ class jsgParser ( Parser ):
             self.state = 82
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==jsgParser.TERMINALS:
+            if _la==6:
                 self.state = 81
                 self.lexerRules()
 
@@ -376,6 +346,7 @@ class jsgParser ( Parser ):
 
 
     class TypeDirectiveContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -421,7 +392,7 @@ class jsgParser ( Parser ):
             self.state = 89
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==jsgParser.DASH:
+            if _la==20:
                 self.state = 88
                 self.typeExceptions()
 
@@ -438,6 +409,7 @@ class jsgParser ( Parser ):
 
 
     class TypeExceptionsContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -483,7 +455,7 @@ class jsgParser ( Parser ):
                 self.state = 97 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==jsgParser.ID):
+                if not (_la==2):
                     break
 
         except RecognitionException as re:
@@ -496,6 +468,7 @@ class jsgParser ( Parser ):
 
 
     class IgnoreDirectiveContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -538,7 +511,7 @@ class jsgParser ( Parser ):
             self.state = 103
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.ID or _la==jsgParser.STRING:
+            while _la==2 or _la==3:
                 self.state = 100
                 self.name()
                 self.state = 105
@@ -557,6 +530,7 @@ class jsgParser ( Parser ):
 
 
     class GrammarEltContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -633,6 +607,7 @@ class jsgParser ( Parser ):
 
 
     class ObjectDefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -677,6 +652,7 @@ class jsgParser ( Parser ):
 
 
     class ObjectExprContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -737,7 +713,7 @@ class jsgParser ( Parser ):
                 self.state = 119
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.ID) | (1 << jsgParser.STRING) | (1 << jsgParser.COMMA) | (1 << jsgParser.OPREN))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 142606348) != 0):
                     self.state = 118
                     self.membersDef()
 
@@ -753,10 +729,10 @@ class jsgParser ( Parser ):
                 self.state = 124
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==jsgParser.LEXER_ID_REF or _la==jsgParser.ANY:
+                if _la==1 or _la==5:
                     self.state = 123
                     _la = self._input.LA(1)
-                    if not(_la==jsgParser.LEXER_ID_REF or _la==jsgParser.ANY):
+                    if not(_la==1 or _la==5):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -770,7 +746,7 @@ class jsgParser ( Parser ):
                 self.state = 129
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 128
                     self.ebnfSuffix()
 
@@ -790,6 +766,7 @@ class jsgParser ( Parser ):
 
 
     class MembersDefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -843,12 +820,12 @@ class jsgParser ( Parser ):
             self.state = 152
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.COMMA]:
+            if token in [23]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 135
                 self.match(jsgParser.COMMA)
                 pass
-            elif token in [jsgParser.ID, jsgParser.STRING, jsgParser.OPREN]:
+            elif token in [2, 3, 27]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 137 
                 self._errHandler.sync(self)
@@ -859,7 +836,7 @@ class jsgParser ( Parser ):
                     self.state = 139 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.ID) | (1 << jsgParser.STRING) | (1 << jsgParser.OPREN))) != 0)):
+                    if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 134217740) != 0)):
                         break
 
                 self.state = 145
@@ -878,7 +855,7 @@ class jsgParser ( Parser ):
                 self.state = 150
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==jsgParser.BAR:
+                if _la==29:
                     self.state = 148
                     self.match(jsgParser.BAR)
                     self.state = 149
@@ -899,6 +876,7 @@ class jsgParser ( Parser ):
 
 
     class AltMemberDefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -933,7 +911,7 @@ class jsgParser ( Parser ):
             self.state = 157
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.ID) | (1 << jsgParser.STRING) | (1 << jsgParser.OPREN))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 134217740) != 0):
                 self.state = 154
                 self.member()
                 self.state = 159
@@ -950,6 +928,7 @@ class jsgParser ( Parser ):
 
 
     class MemberContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -986,7 +965,7 @@ class jsgParser ( Parser ):
             self.state = 162
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==jsgParser.COMMA:
+            if _la==23:
                 self.state = 161
                 self.match(jsgParser.COMMA)
 
@@ -1001,6 +980,7 @@ class jsgParser ( Parser ):
 
 
     class LastCommaContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1039,6 +1019,7 @@ class jsgParser ( Parser ):
 
 
     class PairDefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1104,7 +1085,7 @@ class jsgParser ( Parser ):
                 self.state = 170
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 169
                     self.ebnfSuffix()
 
@@ -1118,7 +1099,7 @@ class jsgParser ( Parser ):
                 self.state = 174
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 173
                     self.ebnfSuffix()
 
@@ -1138,7 +1119,7 @@ class jsgParser ( Parser ):
                     self.state = 180 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if not (_la==jsgParser.ID or _la==jsgParser.STRING):
+                    if not (_la==2 or _la==3):
                         break
 
                 self.state = 182
@@ -1150,7 +1131,7 @@ class jsgParser ( Parser ):
                 self.state = 186
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 185
                     self.ebnfSuffix()
 
@@ -1168,6 +1149,7 @@ class jsgParser ( Parser ):
 
 
     class NameContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1200,7 +1182,7 @@ class jsgParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 190
             _la = self._input.LA(1)
-            if not(_la==jsgParser.ID or _la==jsgParser.STRING):
+            if not(_la==2 or _la==3):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1215,6 +1197,7 @@ class jsgParser ( Parser ):
 
 
     class ArrayDefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1259,6 +1242,7 @@ class jsgParser ( Parser ):
 
 
     class ArrayExprContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1313,7 +1297,7 @@ class jsgParser ( Parser ):
             self.state = 201
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.BAR:
+            while _la==29:
                 self.state = 197
                 self.match(jsgParser.BAR)
                 self.state = 198
@@ -1325,7 +1309,7 @@ class jsgParser ( Parser ):
             self.state = 205
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                 self.state = 204
                 self.ebnfSuffix()
 
@@ -1342,6 +1326,7 @@ class jsgParser ( Parser ):
 
 
     class ObjectMacroContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1396,6 +1381,7 @@ class jsgParser ( Parser ):
 
 
     class ValueTypeMacroContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1451,7 +1437,7 @@ class jsgParser ( Parser ):
             self.state = 221
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.BAR:
+            while _la==29:
                 self.state = 217
                 self.match(jsgParser.BAR)
                 self.state = 218
@@ -1472,6 +1458,7 @@ class jsgParser ( Parser ):
 
 
     class BuiltinValueTypeContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1522,7 +1509,7 @@ class jsgParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 226
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.ANY) | (1 << jsgParser.JSON_STRING) | (1 << jsgParser.JSON_NUMBER) | (1 << jsgParser.JSON_INT) | (1 << jsgParser.JSON_BOOL) | (1 << jsgParser.JSON_NULL) | (1 << jsgParser.JSON_ARRAY) | (1 << jsgParser.JSON_OBJECT))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 130080) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1537,6 +1524,7 @@ class jsgParser ( Parser ):
 
 
     class ValueTypeContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1570,12 +1558,12 @@ class jsgParser ( Parser ):
             self.state = 230
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.ID]:
+            if token in [2]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 228
                 self.idref()
                 pass
-            elif token in [jsgParser.LEXER_ID_REF, jsgParser.STRING, jsgParser.ANY, jsgParser.JSON_STRING, jsgParser.JSON_NUMBER, jsgParser.JSON_INT, jsgParser.JSON_BOOL, jsgParser.JSON_NULL, jsgParser.JSON_ARRAY, jsgParser.JSON_OBJECT, jsgParser.OBRACKET, jsgParser.OBRACE, jsgParser.OPREN]:
+            elif token in [1, 3, 5, 10, 11, 12, 13, 14, 15, 16, 17, 21, 27]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 229
                 self.nonRefValueType()
@@ -1593,6 +1581,7 @@ class jsgParser ( Parser ):
 
 
     class NonRefValueTypeContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1646,32 +1635,32 @@ class jsgParser ( Parser ):
             self.state = 241
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.LEXER_ID_REF]:
+            if token in [1]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 232
                 self.match(jsgParser.LEXER_ID_REF)
                 pass
-            elif token in [jsgParser.STRING]:
+            elif token in [3]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 233
                 self.match(jsgParser.STRING)
                 pass
-            elif token in [jsgParser.ANY, jsgParser.JSON_STRING, jsgParser.JSON_NUMBER, jsgParser.JSON_INT, jsgParser.JSON_BOOL, jsgParser.JSON_NULL, jsgParser.JSON_ARRAY, jsgParser.JSON_OBJECT]:
+            elif token in [5, 10, 11, 12, 13, 14, 15, 16]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 234
                 self.builtinValueType()
                 pass
-            elif token in [jsgParser.OBRACE]:
+            elif token in [21]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 235
                 self.objectExpr()
                 pass
-            elif token in [jsgParser.OBRACKET]:
+            elif token in [17]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 236
                 self.arrayExpr()
                 pass
-            elif token in [jsgParser.OPREN]:
+            elif token in [27]:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 237
                 self.match(jsgParser.OPREN)
@@ -1693,6 +1682,7 @@ class jsgParser ( Parser ):
 
 
     class TypeAlternativesContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1743,7 +1733,7 @@ class jsgParser ( Parser ):
                 self.state = 248 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==jsgParser.BAR):
+                if not (_la==29):
                     break
 
         except RecognitionException as re:
@@ -1756,6 +1746,7 @@ class jsgParser ( Parser ):
 
 
     class IdrefContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1794,6 +1785,7 @@ class jsgParser ( Parser ):
 
 
     class EbnfSuffixContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1844,22 +1836,22 @@ class jsgParser ( Parser ):
             self.state = 264
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.QMARK]:
+            if token in [25]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 252
                 self.match(jsgParser.QMARK)
                 pass
-            elif token in [jsgParser.STAR]:
+            elif token in [24]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 253
                 self.match(jsgParser.STAR)
                 pass
-            elif token in [jsgParser.PLUS]:
+            elif token in [26]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 254
                 self.match(jsgParser.PLUS)
                 pass
-            elif token in [jsgParser.OBRACE]:
+            elif token in [21]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 255
                 self.match(jsgParser.OBRACE)
@@ -1868,16 +1860,16 @@ class jsgParser ( Parser ):
                 self.state = 261
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==jsgParser.COMMA:
+                if _la==23:
                     self.state = 257
                     self.match(jsgParser.COMMA)
                     self.state = 259
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==jsgParser.INT or _la==jsgParser.STAR:
+                    if _la==4 or _la==24:
                         self.state = 258
                         _la = self._input.LA(1)
-                        if not(_la==jsgParser.INT or _la==jsgParser.STAR):
+                        if not(_la==4 or _la==24):
                             self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -1902,6 +1894,7 @@ class jsgParser ( Parser ):
 
 
     class LexerRulesContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1941,7 +1934,7 @@ class jsgParser ( Parser ):
             self.state = 270
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.LEXER_ID:
+            while _la==34:
                 self.state = 267
                 self.lexerRuleSpec()
                 self.state = 272
@@ -1958,6 +1951,7 @@ class jsgParser ( Parser ):
 
 
     class LexerRuleSpecContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2012,6 +2006,7 @@ class jsgParser ( Parser ):
 
 
     class LexerRuleBlockContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2049,7 +2044,7 @@ class jsgParser ( Parser ):
             self.state = 280
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.ANY) | (1 << jsgParser.JSON_STRING) | (1 << jsgParser.JSON_NUMBER) | (1 << jsgParser.JSON_INT) | (1 << jsgParser.JSON_BOOL) | (1 << jsgParser.JSON_NULL) | (1 << jsgParser.JSON_ARRAY) | (1 << jsgParser.JSON_OBJECT))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 130080) != 0):
                 self.state = 279
                 self.builtinValueType()
 
@@ -2064,6 +2059,7 @@ class jsgParser ( Parser ):
 
 
     class LexerAltListContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2106,7 +2102,7 @@ class jsgParser ( Parser ):
             self.state = 287
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==jsgParser.BAR:
+            while _la==29:
                 self.state = 283
                 self.match(jsgParser.BAR)
                 self.state = 284
@@ -2125,6 +2121,7 @@ class jsgParser ( Parser ):
 
 
     class LexerAltContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2176,6 +2173,7 @@ class jsgParser ( Parser ):
 
 
     class LexerElementsContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2230,6 +2228,7 @@ class jsgParser ( Parser ):
 
 
     class LexerElementContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2268,27 +2267,27 @@ class jsgParser ( Parser ):
             self.state = 307
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.STRING, jsgParser.ANY, jsgParser.LEXER_ID, jsgParser.LEXER_CHAR_SET]:
+            if token in [3, 5, 34, 35]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 299
                 self.lexerAtom()
                 self.state = 301
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 300
                     self.ebnfSuffix()
 
 
                 pass
-            elif token in [jsgParser.OPREN]:
+            elif token in [27]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 303
                 self.lexerBlock()
                 self.state = 305
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << jsgParser.OBRACE) | (1 << jsgParser.STAR) | (1 << jsgParser.QMARK) | (1 << jsgParser.PLUS))) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 119537664) != 0):
                     self.state = 304
                     self.ebnfSuffix()
 
@@ -2307,6 +2306,7 @@ class jsgParser ( Parser ):
 
 
     class LexerBlockContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2356,6 +2356,7 @@ class jsgParser ( Parser ):
 
 
     class LexerAtomContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2391,17 +2392,17 @@ class jsgParser ( Parser ):
             self.state = 316
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [jsgParser.STRING, jsgParser.LEXER_ID]:
+            if token in [3, 34]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 313
                 self.lexerTerminal()
                 pass
-            elif token in [jsgParser.LEXER_CHAR_SET]:
+            elif token in [35]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 314
                 self.match(jsgParser.LEXER_CHAR_SET)
                 pass
-            elif token in [jsgParser.ANY]:
+            elif token in [5]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 315
                 self.match(jsgParser.ANY)
@@ -2419,6 +2420,7 @@ class jsgParser ( Parser ):
 
 
     class LexerTerminalContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -2451,7 +2453,7 @@ class jsgParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 318
             _la = self._input.LA(1)
-            if not(_la==jsgParser.STRING or _la==jsgParser.LEXER_ID):
+            if not(_la==3 or _la==34):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
