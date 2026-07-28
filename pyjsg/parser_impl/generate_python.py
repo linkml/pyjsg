@@ -4,9 +4,14 @@ import os
 from argparse import ArgumentParser
 
 import sys
-from antlr4 import CommonTokenStream
-from antlr4 import FileStream, InputStream
-from antlr4.error.ErrorListener import ErrorListener
+try:
+    from antlr4 import CommonTokenStream
+    from antlr4 import FileStream, InputStream
+    from antlr4.error.ErrorListener import ErrorListener
+except ImportError as e:
+    raise ImportError(
+        "The .jsg -> Python compiler requires the antlr runtime, which is an optional"
+        " dependency: pip install 'pyjsg[compiler]'") from e
 from pyjsg.parser.jsgParser import jsgParser
 
 from pyjsg.parser.jsgLexer import jsgLexer
