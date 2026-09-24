@@ -8,11 +8,18 @@ from typing import Union, get_origin
 if sys.version_info >= (3, 7):
     from typing import Any, ForwardRef, _eval_type
 
+import inspect
+
+# typing._eval_type grew a type_params parameter (3.12), deprecated omitting it (3.13, 3.14)
+# and made it a required positional argument in 3.15.  Forward references here never
+# refer to PEP 695 type parameters, so pass an empty tuple wherever it is accepted.
+_EVAL_TYPE_KWARGS = {'type_params': ()} if 'type_params' in inspect.signature(_eval_type).parameters else {}
+
 
 def proc_forward(etype, namespace: dict[str, Any]):
     """ Resolve etype to an actual type if it is a forward reference """
     if type(etype) is ForwardRef:
-        return _eval_type(etype, namespace, namespace)
+        return _eval_type(etype, namespace, namespace, **_EVAL_TYPE_KWARGS)
     # Namespace can be None, for example in the test_simple_object test.
     if namespace is not None and is_union(etype):
         # This prevents resolving __args__ to the current namespace. Previously in the test it could be that an old
