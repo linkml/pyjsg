@@ -10,7 +10,7 @@ on:
 
 jobs:
   quality-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - name: Install uv
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-24.04, windows-latest]
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         # Test on Windows with only the oldest and newest Python versions
     # See https://github.com/snok/install-poetry#running-on-windows
@@ -75,6 +75,9 @@ jobs:
       - name: Generate coverage results
         # Set bash shell to fail correctly on Windows https://github.com/actions/runner-images/issues/6668
         shell: bash
+        env:
+          # Authenticated GitHub API calls avoid the unauthenticated per-IP rate limit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run coverage run -m pytest
           uv run coverage xml
@@ -88,5 +91,5 @@ jobs:
         with:
           name: codecov-results-${{ matrix.os }}-${{ matrix.python-version }}
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage.xml
+          files: coverage.xml
           fail_ci_if_error: false

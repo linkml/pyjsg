@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 import pytest
 from contextlib import redirect_stdout
@@ -37,11 +38,25 @@ def validate_shexj_json(json_str: str, input_fname: str, parser) -> bool:
     return True
 
 
+def http_get(url: str, retries: int = 4) -> requests.Response:
+    """ GET with a GITHUB_TOKEN (if available, for api.github.com) and backoff on rate limiting """
+    headers = {}
+    token = os.environ.get('GITHUB_TOKEN')
+    if token and url.startswith('https://api.github.com/'):
+        headers['Authorization'] = f'Bearer {token}'
+    for attempt in range(retries + 1):
+        resp = requests.get(url, headers=headers)
+        if resp.status_code not in (403, 429) or attempt == retries:
+            return resp
+        time.sleep(2 ** attempt * 5)
+    return resp
+
+
 def get_file_list() -> list[str]:
     if ONLY_TEST_THIS:
         return [ONLY_TEST_THIS]
     if '://' in shexTestRepository:
-        resp = requests.get(shexTestRepository)
+        resp = http_get(shexTestRepository)
         if resp.ok:
             return [f['download_url'] for f in resp.json() if f['name'].endswith('.json')]
         raise RuntimeError(f"Error {resp.status_code}: {resp.reason}")
@@ -53,7 +68,7 @@ def get_file_list() -> list[str]:
 
 def fetch_file(url: str) -> str:
     if '://' in url:
-        resp = requests.get(url)
+        resp = http_get(url)
         if resp.ok:
             return resp.text
         raise RuntimeError(f"Error {resp.status_code}: {resp.reason}")
