@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Build distributions 📦
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v6
@@ -38,7 +38,7 @@ jobs:
     name: Publish to TestPyPI
     needs: build
     if: github.event.release.prerelease == true
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       id-token: write
@@ -62,7 +62,7 @@ jobs:
     name: Publish to PyPI
     needs: build
     if: github.event.release.prerelease == false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       id-token: write

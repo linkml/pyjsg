@@ -37,9 +37,18 @@ classifiers = [
 requires-python = ">=3.10"
 dynamic = ["version"]
 dependencies = [
-  "antlr4-python3-runtime~=4.9.3",
   "jsonasobj>=1.2.1",
   "requests",
+]
+
+[project.optional-dependencies]
+# The antlr runtime is needed only by the .jsg -> Python compiler
+# (pyjsg.parser / pyjsg.parser_impl); pyjsg.jsglib -- the runtime library
+# that generated code and downstream packages (ShExJSG, PyShEx) import --
+# has no antlr dependency.  Keeping it out of the core requirements frees
+# downstream packages from antlr version-lock conflicts.
+compiler = [
+  "antlr4-python3-runtime~=4.13.2",
 ]
 
 [project.scripts]
@@ -62,6 +71,7 @@ dev = [
     "pytest",
     "pytest-forked",
     "coverage",
+    "antlr4-python3-runtime~=4.13.2",
 ]
 
 [tool.black]
